@@ -117,6 +117,9 @@ This separation allows the HUD to remain active even when the activity is destro
 ## Next dev tasks:
 - Implement one of the feature ideas listed below
 
+## Next Testing Task:
+- Test background service implementation: Verify that the glasses HUD continues to work when the app is in the background and a different app is open. The HUD should remain visible on the glasses even when the phone is showing other applications.
+
 ## Next human tasks:
 - Design an official HUG layout to then figure out what features to build into the glassess
 
