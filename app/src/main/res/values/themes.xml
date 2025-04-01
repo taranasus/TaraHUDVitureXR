@@ -1,0 +1,20 @@
+<resources>
+
+    <style name="Theme.SensorDemo" parent="@style/Theme.AppCompat.NoActionBar" />
+<!--    <style name="Theme.SensorDemo" parent="@style/Theme.Leanback" />-->
+
+    <style name="Theme.SensorDemo.Fullscreen" parent="Theme.SensorDemo">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:immersive">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+    </style>
+
+    <style name="ThemeOverlay.SensorDemo.FullscreenContainer" parent="">
+        <item name="fullscreenBackgroundColor">@android:color/black</item>
+        <item name="fullscreenTextColor">@android:color/white</item>
+    </style>
+</resources>

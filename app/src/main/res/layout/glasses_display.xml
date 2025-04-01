@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:keepScreenOn="true">
+
+    <!-- 
+        For 3D mode (3840x1080): This TextView will only be visible in the right eye
+        For right eye placement, we position it at the right edge
+     -->
+    <TextView
+        android:id="@+id/glasses_right_eye_text"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/green_border_box"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="ONLINE"
+        android:textColor="#00FF00"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <!-- 
+        For 2D mode (1920x1080): This TextView will be visible in both eyes
+        Positioned in the top-right corner of the 2D display
+     -->
+    <TextView
+        android:id="@+id/glasses_2d_text"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/green_border_box"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="ONLINE"
+        android:textColor="#00FF00"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+</FrameLayout>

@@ -1,0 +1,44 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace "com.eden.demo.sensor"
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.eden.demo.sensor"
+        minSdk 28
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+    }
+
+    lint {
+        // Disable the TV-related lint checks
+        disable 'MissingTvBanner', 'ImpliedTouchscreenHardware', 'UnsupportedTvHardware'
+        // You can also make lint warnings not fail the build entirely
+        abortOnError false
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.leanback:leanback:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.4.0'
+
+    implementation fileTree(dir: 'libs', includes: ['*.jar', '*.aar'])
+}
