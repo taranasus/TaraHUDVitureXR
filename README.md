@@ -32,6 +32,11 @@ The app showcases several key capabilities of the VITURE XR Glasses SDK:
    - Green-bordered box with "ONLINE" text
    - Phone status updates and control buttons
 
+4. **Background Service**:
+   - Persistent foreground service maintains the glasses display even when the app is in background
+   - HUD remains visible when using other apps or when the phone screen is locked
+   - Notification provides easy access back to the control UI
+
 ## Building and Running
 
 This project is designed to be built and run using Android Studio:
@@ -90,15 +95,33 @@ When making changes to this project, please follow these steps:
 
 **Important Note:** Always update the README.md last, just before running the Git commands to commit and push your changes.
 
+## Architecture Overview
+
+The application uses a client-server architecture pattern within the app:
+
+1. **GlassesDisplayService** (Server)
+   - Runs as a foreground service with a persistent notification
+   - Manages VITURE SDK initialization and lifecycle
+   - Handles display connection and presentation
+   - Controls the HUD content (2D/3D modes, visibility)
+   - Continues to run in the background when other apps are in focus
+
+2. **FullscreenActivity** (Client)
+   - Provides the user interface for controlling the HUD
+   - Binds to the GlassesDisplayService using Android's service binding mechanism
+   - Sends commands to the service based on user interaction
+   - Updates UI to reflect the current state of the service
+
+This separation allows the HUD to remain active even when the activity is destroyed or other apps are in the foreground.
+
 ## Next dev tasks:
-- Make it automatically switch the glasses to be transparent (not opaque) when the app starts
+- Implement one of the feature ideas listed below
 
 ## Next human tasks:
 - Design an official HUG layout to then figure out what features to build into the glassess
-- Figure out some cool features to add to them
 
 ## Feature Ideas:
-- Make glassess HUD also work when the app is in the background and a different app is open, I want this thing to be able to run and pump info to the glassess at all times.
+- Make a new display mode where, when set to 3D mode, the images for the two eyes are siwtched around (left image to right eye, right image to left eye)
 - Pump the phone cameras feeds into the glassess to see what the phone sees
 - Real-time audio to text conversion that gets displayed to the user inside the glassess as it happens
 - Real-time sending of all text to a central storage location for later processing by an AI
@@ -108,3 +131,28 @@ When making changes to this project, please follow these steps:
 - Video feed of the phone's main screen to the glassess within the glassess HUD UI so the user can see what's on the phone screen
 - Music widget inside the glassess with waveform cause I like waveforms
 - Notifications display
+
+## Development Notes
+
+### Background Service Implementation
+The background service uses Android's `Service` class with the `startForeground()` method to keep the service running even when the app is in the background. This approach requires:
+
+1. The `FOREGROUND_SERVICE` permission in AndroidManifest.xml
+2. Creating a notification channel (for Android 8.0+)
+3. Displaying a persistent notification while the service is running
+4. Proper lifecycle management between Activity and Service
+
+### Testing
+When testing background functionality:
+1. Launch the app and ensure the HUD is visible on the glasses
+2. Press the home button or switch to another app
+3. The HUD should remain visible on the glasses
+4. Tap the persistent notification to return to the control UI
+
+### Known Limitations
+- The service will be killed if the app is force-stopped by the user or system
+- Some devices with aggressive battery optimization may still stop the service
+- For complete persistence, consider enabling "Ignore battery optimizations" for the app (requires additional permissions)
+
+## ON HOLD
+- Make it automatically switch the glasses to be transparent (not opaque) when the app starts - Not possible in current version of SDK (1.0.7) but dev team said they're working on it so might be in the next version when it drops. On hold for now.

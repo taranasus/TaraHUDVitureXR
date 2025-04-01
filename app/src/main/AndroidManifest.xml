@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.eden.demo.sensor">
 
+    <!-- Required permission for foreground service -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,6 +28,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <!-- Background service for maintaining glasses display -->
+        <service
+            android:name=".GlassesDisplayService"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>
