@@ -71,6 +71,10 @@ For more comprehensive information about the VITURE XR Glasses SDK, please refer
 - Android 8.0 (API level 28) or higher
 - USB-C connection to the VITURE XR Glasses
 
+## Additional Resources
+
+- **ExampleProjectAndDocumentation.zip**: This file contains an example project that demonstrates the capabilities of the Viture XR SDK. It's based on the project found at [Viture's official website](https://first.viture.com/developer/viture-sdk-for-android) (version 1.0.7) but has been modified to ensure it builds and runs correctly at the time of writing. This can be useful as a reference for understanding the SDK features beyond what's implemented in this project.
+
 ## Next dev tasks:
 - Make it automatically switch the glasses to be transparent (not opaque) when the app starts
 
