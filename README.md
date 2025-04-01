@@ -134,6 +134,7 @@ This separation allows the HUD to remain active even when the activity is destro
 - Video feed of the phone's main screen to the glassess within the glassess HUD UI so the user can see what's on the phone screen
 - Music widget inside the glassess with waveform cause I like waveforms
 - Notifications display
+- **Screen-Off Display Persistence**: Implement wake lock functionality to keep the HUD visible on the glasses even when the phone screen is turned off, allowing for extended use without needing to keep the phone screen on (requires WAKE_LOCK permission and will increase battery consumption)
 
 ## Development Notes
 
