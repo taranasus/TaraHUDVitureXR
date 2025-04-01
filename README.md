@@ -75,6 +75,21 @@ For more comprehensive information about the VITURE XR Glasses SDK, please refer
 
 - **ExampleProjectAndDocumentation.zip**: This file contains an example project that demonstrates the capabilities of the Viture XR SDK. It's based on the project found at [Viture's official website](https://first.viture.com/developer/viture-sdk-for-android) (version 1.0.7) but has been modified to ensure it builds and runs correctly at the time of writing. This can be useful as a reference for understanding the SDK features beyond what's implemented in this project.
 
+## Development Workflow
+
+When making changes to this project, please follow these steps:
+
+1. Make all necessary code changes and test them thoroughly
+2. Update the README.md file as the final step to document any new features or changes
+3. Use Git to track and commit your changes:
+   ```
+   git add .
+   git commit -m "Brief description of changes"
+   git push
+   ```
+
+**Important Note:** Always update the README.md last, just before running the Git commands to commit and push your changes.
+
 ## Next dev tasks:
 - Make it automatically switch the glasses to be transparent (not opaque) when the app starts
 
