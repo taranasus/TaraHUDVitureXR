@@ -115,15 +115,20 @@ The application uses a client-server architecture pattern within the app:
 This separation allows the HUD to remain active even when the activity is destroyed or other apps are in the foreground.
 
 ## Next dev tasks:
-- Implement one of the feature ideas listed below
+- **Screen-Off Display Persistence**: Implement wake lock functionality to keep the HUD visible on the glasses even when the phone screen is turned off, allowing for extended use without needing to keep the phone screen on (requires WAKE_LOCK permission and will increase battery consumption)
 
 ## Next Testing Task:
 - Test background service implementation: Verify that the glasses HUD continues to work when the app is in the background and a different app is open. The HUD should remain visible on the glasses even when the phone is showing other applications.
 
 ## Next human tasks:
-- Design an official HUG layout to then figure out what features to build into the glassess
+- Design an official HUD layout to then figure out what features to build into the glassess
 
 ## Feature Ideas:
+- Display Date and Time
+- Main UI interface that's always up HUD for regular outside usage
+- Various different UIs for specialized needs with a main home interface (Just like the menu system in a game)
+- Make interface look like Cyberpunk 2077 interface
+- Small to-do list widget with like the top 2-3 items of the day remaining to look like mission objectives
 - Make a new display mode where, when set to 3D mode, the images for the two eyes are siwtched around (left image to right eye, right image to left eye)
 - Pump the phone cameras feeds into the glassess to see what the phone sees
 - Real-time audio to text conversion that gets displayed to the user inside the glassess as it happens
@@ -132,9 +137,10 @@ This separation allows the HUD to remain active even when the activity is destro
 - Always on AI voice operation that allows the user to control the glassess and their actions by simply speaking them
 - Tight AI integration with the glasses and phone features so the AI can operate the phone independently
 - Video feed of the phone's main screen to the glassess within the glassess HUD UI so the user can see what's on the phone screen
+- Integrate with AI agents that can operate the phone to do actions like navigate to apps and stuff.
 - Music widget inside the glassess with waveform cause I like waveforms
 - Notifications display
-- **Screen-Off Display Persistence**: Implement wake lock functionality to keep the HUD visible on the glasses even when the phone screen is turned off, allowing for extended use without needing to keep the phone screen on (requires WAKE_LOCK permission and will increase battery consumption)
+- A little Bluetooth controller with some buttons that fits in one hand in order to control the UI without getting the phone out and simulate that Videogame experience. Needs at least 6 buttson (up,down,left,right,confirm,cancel)
 
 ## Development Notes
 
