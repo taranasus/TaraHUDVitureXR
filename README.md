@@ -128,6 +128,11 @@ This separation allows the HUD to remain active even when the activity is destro
 - Main UI interface that's always up HUD for regular outside usage
 - Various different UIs for specialized needs with a main home interface (Just like the menu system in a game)
 - Make interface look like Cyberpunk 2077 interface
+![Example 1](https://kagi.com/proxy/01-HUD_res-1920x1080.jpg?c=r3ruTN54uRUfKZ7YQWAyRjrcWRhLwbKbHxR-z9yws1vBMoyguZdt02IJ_DYtUKGHZ-LtcvlFORMi4p4yTKXBIvm_BSb4rpHkbTn7XBjOeAziuDqXFJjVldjTFfXFJPlS)
+![Example 2](https://kagi.com/proxy/cyberpunk-2077-inventory.png?c=r3ruTN54uRUfKZ7YQWAyRjrcWRhLwbKbHxR-z9yws1uB_4i6PVbzr6ks6OEhVQjOHEeevQkGFDxu_CXxQlR9j6CXEZ0iMgF07OQ5Tcf9YkbUO0eeZW23OP1Esh-dpnEMFieNCfGsWdSjhaPahY7voA%3D%3D)
+![Example 3](https://kagi.com/proxy/Cyberpunk-207712292020-013429-95236.jpg?c=Wm3gB90_xO0KDyFYSPobHLotF6fiM7Cgw5qArYgphVg2VIQvgm8tyurnj5qk29uuLvwSwosK_H-oCpkCvQ3b7Prnk9jNYcangX1zMSIbX8qytgNVJczleUJxhzjYA0gk)
+![Example 4](https://kagi.com/proxy/omg7z3u0e3p91.jpg?c=MHaoEHf4JA4T1dYEo1CR0X0TUe2ouvSbn8yjRBD1I_nC9ho-4N4vcnXNlOXXk3q9J45pfeetiT5ugwGR9vm_pvbhpHMDb08-TlkMtfqRU4p9HVI_baJZN8l4eE0RJzT9TXUkqMoHZbRFb7ynNgrGoqaFR8YFnhu3Uan0GiGU4C5_KGNIb8JZk5-fc_7fvK0g)
+![Example 5](https://kagi.com/proxy/vo82brtkyk491.jpg?c=TklOzPjLPioJ5YMJT75bSoRpDc5CNyG1ip-t0-zqb3GpJjA69-hJwXUeCbIcFHEI)
 - Small to-do list widget with like the top 2-3 items of the day remaining to look like mission objectives
 - Make a new display mode where, when set to 3D mode, the images for the two eyes are siwtched around (left image to right eye, right image to left eye)
 - Pump the phone cameras feeds into the glassess to see what the phone sees
