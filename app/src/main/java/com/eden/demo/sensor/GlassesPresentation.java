@@ -205,7 +205,7 @@ public class GlassesPresentation extends Presentation {
             
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     8, ViewGroup.LayoutParams.MATCH_PARENT);
-            params.setMarginEnd(10);
+            params.setMarginEnd(3);
             
             container.addView(segment, params);
         }
