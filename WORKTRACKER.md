@@ -12,21 +12,17 @@
 8. You are done
 
 ## Next Dev Task:
--
+- The signal bar of the top-left UI does not appear to actually show the signal strength fromt he phone. Perhaps it's a bug? Needs investigating.
 
 ## Next Testing Task:
-- Display the phone battery level as a health bar in the top-left corner of the glassess UI. Remove the current items displayed on the glassess UI and instead make an interface that looks exactly like the one portraid in this image (/Users/justinpopa/Repos/TaraHUDVirtuoXR/Documentation/TopLeftUI.jpg) with the following changes:
-    - Instead of the number "28" that's currently showed in the picture it should show the current time in military format.
-    - The red health bar should show the current phone battery percentage
-    - The blue slim bar should indecate phone signal strength
-    - The two numbers at the end should show the Day and Month. 315 should be the current day, 405 should be the current month in three-letter format (APR, MAY, NOV, etc)
-    - To understand a sense of scale of what this UI should look like on the screen, here is the example UI showed in the context of a screen https://kagi.com/proxy/01-HUD_res-1920x1080.jpg?c=r3ruTN54uRUfKZ7YQWAyRjrcWRhLwbKbHxR-z9yws1vBMoyguZdt02IJ_DYtUKGHZ-LtcvlFORMi4p4yTKXBIvm_BSb4rpHkbTn7XBjOeAziuDqXFJjVldjTFfXFJPlS
 
-## Next human tasks:
-- Design an official HUD layout to then figure out what features to build into the glassess.
+
 
 ## Feature Ideas:
-- Main UI interface that's always up HUD for regular outside usage
+- Move all the code for the top-left UI elements to a different file (called healthStats) or set of files and have that impored as a separate component in the main glassess_display activity. 
+- Marege the 2D and 3D layout in some way so that we don't keep duplicating layout code across the two vide modes.
+- Add to the healthStats two red Icons to the left of the clock, one should show the WiFi status, the other should be just a placeholder for now
+- Main UI interface that's always up HUD for regular outside usage.
 - Various different UIs for specialized needs with a main home interface (Just like the menu system in a game)
 - Make interface look like Cyberpunk 2077 interface
 ![Example 1](https://kagi.com/proxy/01-HUD_res-1920x1080.jpg?c=r3ruTN54uRUfKZ7YQWAyRjrcWRhLwbKbHxR-z9yws1vBMoyguZdt02IJ_DYtUKGHZ-LtcvlFORMi4p4yTKXBIvm_BSb4rpHkbTn7XBjOeAziuDqXFJjVldjTFfXFJPlS)
@@ -49,6 +45,7 @@
 - A little Bluetooth controller with some buttons that fits in one hand in order to control the UI without getting the phone out and simulate that Videogame experience. Needs at least 6 buttson (up,down,left,right,confirm,cancel)
 
 ## Completed
+- Display the phone battery level as a health bar in the top-left corner of the glassess UI. 
 - Boilerplate implementation
 - Refactoring of GlassesDisplayService so that it's smaller.
 - Test DateTime is displayed in the glasses.

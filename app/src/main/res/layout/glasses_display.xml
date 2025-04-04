@@ -23,7 +23,7 @@
         <!-- Left section with time display -->
         <TextView
             android:id="@+id/time_display_right"
-            android:layout_width="65dp"
+            android:layout_width="55dp"
             android:layout_height="40dp"
             android:background="@drawable/cyan_box_background"
             android:gravity="center"
@@ -37,7 +37,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="3dp"
             android:orientation="vertical">
 
             <!-- Signal strength bar - using horizontal LinearLayout with segments -->
@@ -45,7 +45,7 @@
                 android:id="@+id/signal_layout_right"
                 android:layout_width="200dp"
                 android:layout_height="5dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="0dp"
                 android:orientation="horizontal"
                 android:background="@drawable/signal_bar_background_updated">
 
@@ -56,8 +56,8 @@
             <ProgressBar
                 android:id="@+id/battery_bar_right"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="200dp"
-                android:layout_height="15dp"
+                android:layout_width="300dp"
+                android:layout_height="18dp"
                 android:layout_marginTop="3dp"
                 android:progress="75"
                 android:progressDrawable="@drawable/health_bar_progress" />
@@ -67,8 +67,8 @@
                 android:id="@+id/segment_bar_right"
                 android:layout_width="200dp"
                 android:layout_height="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="0dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="-4dp"
                 android:orientation="horizontal"
                 android:background="@drawable/segment_bar_background">
 
@@ -80,7 +80,7 @@
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="5dp"
             android:layout_gravity="center_vertical">
 
             <TextView
