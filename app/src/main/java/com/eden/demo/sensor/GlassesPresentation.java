@@ -78,7 +78,7 @@ public class GlassesPresentation extends Presentation {
         
         // Initialize date formats
         mTimeFormat = new SimpleDateFormat("HH", Locale.getDefault());
-        mMonthFormat = new SimpleDateFormat("MMM", Locale.getDefault()).toUpperCase(Locale.getDefault());
+        mMonthFormat = new SimpleDateFormat("MMM", Locale.getDefault());
         
         // Initialize signal segment drawable
         mSignalSegmentDrawable = context.getDrawable(R.drawable.signal_bar_item);
@@ -344,6 +344,9 @@ public class GlassesPresentation extends Presentation {
         // Format month as 3 letter abbrev + index (e.g., APR -> 405)
         int monthIndex = calendar.get(Calendar.MONTH) + 1;
         String monthDisplay = String.format(Locale.getDefault(), "%03d", (monthIndex * 100) + 5);
+        
+        // Convert month abbreviation to uppercase
+        monthAbbr = monthAbbr.toUpperCase(Locale.getDefault());
         
         // Update 3D mode displays
         if (mDayDisplay3D != null) {
