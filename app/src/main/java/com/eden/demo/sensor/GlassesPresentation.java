@@ -48,6 +48,7 @@ public class GlassesPresentation extends Presentation {
     private TextView mTimeDisplay3D;
     private ProgressBar mBatteryBar3D;
     private LinearLayout mSignalLayout3D;
+    private LinearLayout mSegmentBar3D;
     private TextView mDayDisplay3D;
     private TextView mMonthDisplay3D;
     private LinearLayout mHudLayout3D;
@@ -56,6 +57,7 @@ public class GlassesPresentation extends Presentation {
     private TextView mTimeDisplay2D;
     private ProgressBar mBatteryBar2D;
     private LinearLayout mSignalLayout2D;
+    private LinearLayout mSegmentBar2D;
     private TextView mDayDisplay2D;
     private TextView mMonthDisplay2D;
     private LinearLayout mHudLayout2D;
@@ -69,9 +71,11 @@ public class GlassesPresentation extends Presentation {
     private SimpleDateFormat mTimeFormat;
     private SimpleDateFormat mMonthFormat;
     
-    // Signal bar segments
+    // Bar segments
     private static final int MAX_SIGNAL_BARS = 15;
+    private static final int MAX_SEGMENT_BARS = 10;
     private Drawable mSignalSegmentDrawable;
+    private Drawable mSegmentItemDrawable;
     
     public GlassesPresentation(Context context, Display display) {
         super(context, display);
@@ -80,8 +84,9 @@ public class GlassesPresentation extends Presentation {
         mTimeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
         mMonthFormat = new SimpleDateFormat("MMM", Locale.getDefault());
         
-        // Initialize signal segment drawable
+        // Initialize drawables
         mSignalSegmentDrawable = context.getDrawable(R.drawable.signal_bar_item);
+        mSegmentItemDrawable = context.getDrawable(R.drawable.segment_bar_item);
     }
     
     @Override
@@ -103,6 +108,7 @@ public class GlassesPresentation extends Presentation {
         mTimeDisplay3D = mGlassesBinding.timeDisplayRight;
         mBatteryBar3D = mGlassesBinding.batteryBarRight;
         mSignalLayout3D = mGlassesBinding.signalLayoutRight;
+        mSegmentBar3D = mGlassesBinding.segmentBarRight;
         mDayDisplay3D = mGlassesBinding.dayDisplayRight;
         mMonthDisplay3D = mGlassesBinding.monthDisplayRight;
         
@@ -111,6 +117,7 @@ public class GlassesPresentation extends Presentation {
         mTimeDisplay2D = mGlassesBinding.timeDisplay2d;
         mBatteryBar2D = mGlassesBinding.batteryBar2d;
         mSignalLayout2D = mGlassesBinding.signalLayout2d;
+        mSegmentBar2D = mGlassesBinding.segmentBar2d;
         mDayDisplay2D = mGlassesBinding.dayDisplay2d;
         mMonthDisplay2D = mGlassesBinding.monthDisplay2d;
         
@@ -120,9 +127,11 @@ public class GlassesPresentation extends Presentation {
             applyFontToAllTextViews(rajdhaniTypeface);
         }
         
-        // Create signal bar segments
+        // Create bar segments
         createSignalBars(mSignalLayout3D);
         createSignalBars(mSignalLayout2D);
+        createSegmentBars(mSegmentBar3D);
+        createSegmentBars(mSegmentBar2D);
         
         // Initialize telephony manager for signal strength
         initializeSignalStrengthMonitoring();
@@ -175,6 +184,34 @@ public class GlassesPresentation extends Presentation {
             
             container.addView(segment, params);
         }
+    }
+    
+    /**
+     * Create segment bar items
+     */
+    private void createSegmentBars(LinearLayout container) {
+        container.removeAllViews();
+        
+        // Add spacing at the beginning
+        View spacer = new View(getContext());
+        LinearLayout.LayoutParams spacerParams = new LinearLayout.LayoutParams(
+                5, ViewGroup.LayoutParams.MATCH_PARENT);
+        container.addView(spacer, spacerParams);
+        
+        // Create individual segments with gaps between them
+        for (int i = 0; i < MAX_SEGMENT_BARS; i++) {
+            View segment = new View(getContext());
+            segment.setBackground(mSegmentItemDrawable.getConstantState().newDrawable());
+            
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    8, ViewGroup.LayoutParams.MATCH_PARENT);
+            params.setMarginEnd(10);
+            
+            container.addView(segment, params);
+        }
+        
+        // Set 50% of segments visible
+        updateSegmentBars(container, MAX_SEGMENT_BARS / 2);
     }
     
     /**
@@ -270,6 +307,25 @@ public class GlassesPresentation extends Presentation {
         updateBatteryDisplay();
         updateSignalDisplay();
         updateDateDisplay();
+    }
+    
+    /**
+     * Update the segment bars (50% filled)
+     */
+    private void updateSegmentBars(LinearLayout container, int visibleCount) {
+        if (container == null || container.getChildCount() <= 1) return;
+        
+        // Skip the first child which is the spacer
+        for (int i = 1; i < container.getChildCount(); i++) {
+            View segment = container.getChildAt(i);
+            
+            // Show half the segments
+            if (i - 1 < visibleCount) {
+                segment.setVisibility(View.VISIBLE);
+            } else {
+                segment.setVisibility(View.INVISIBLE);
+            }
+        }
     }
     
     /**

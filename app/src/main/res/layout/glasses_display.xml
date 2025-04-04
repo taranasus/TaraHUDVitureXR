@@ -44,10 +44,10 @@
             <LinearLayout
                 android:id="@+id/signal_layout_right"
                 android:layout_width="200dp"
-                android:layout_height="8dp"
+                android:layout_height="5dp"
                 android:layout_marginTop="3dp"
                 android:orientation="horizontal"
-                android:background="@drawable/signal_bar_background">
+                android:background="@drawable/signal_bar_background_updated">
 
                 <!-- Signal segments will be added programmatically -->
             </LinearLayout>
@@ -57,28 +57,37 @@
                 android:id="@+id/battery_bar_right"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="200dp"
-                android:layout_height="12dp"
+                android:layout_height="15dp"
                 android:layout_marginTop="3dp"
                 android:progress="75"
                 android:progressDrawable="@drawable/health_bar_progress" />
                 
+            <!-- Segment bar (new) -->
+            <LinearLayout
+                android:id="@+id/segment_bar_right"
+                android:layout_width="200dp"
+                android:layout_height="6dp"
+                android:layout_marginTop="3dp"
+                android:orientation="horizontal"
+                android:background="@drawable/segment_bar_background">
+
+                <!-- Segment bar items will be added programmatically -->
+            </LinearLayout>
         </LinearLayout>
         
         <!-- Day and month display -->
-        <LinearLayout
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_gravity="center_vertical">
 
             <TextView
                 android:id="@+id/day_display_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:textColor="#FF6040"
-                android:textSize="14sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 android:text="04" />
 
@@ -86,11 +95,13 @@
                 android:id="@+id/month_display_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="-2dp"
                 android:textColor="#FF6040"
-                android:textSize="14sp"
+                android:textSize="11sp"
                 android:textStyle="bold"
                 android:text="APR" />
-        </LinearLayout>
+        </FrameLayout>
     </LinearLayout>
 
     <!-- 
@@ -131,10 +142,10 @@
             <LinearLayout
                 android:id="@+id/signal_layout_2d"
                 android:layout_width="200dp"
-                android:layout_height="8dp"
+                android:layout_height="5dp"
                 android:layout_marginTop="3dp"
                 android:orientation="horizontal"
-                android:background="@drawable/signal_bar_background">
+                android:background="@drawable/signal_bar_background_updated">
 
                 <!-- Signal segments will be added programmatically -->
             </LinearLayout>
@@ -144,27 +155,37 @@
                 android:id="@+id/battery_bar_2d"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="200dp"
-                android:layout_height="12dp"
+                android:layout_height="15dp"
                 android:layout_marginTop="3dp"
                 android:progress="75"
                 android:progressDrawable="@drawable/health_bar_progress" />
+                
+            <!-- Segment bar (new) -->
+            <LinearLayout
+                android:id="@+id/segment_bar_2d"
+                android:layout_width="200dp"
+                android:layout_height="6dp"
+                android:layout_marginTop="3dp"
+                android:orientation="horizontal"
+                android:background="@drawable/segment_bar_background">
+
+                <!-- Segment bar items will be added programmatically -->
+            </LinearLayout>
         </LinearLayout>
         
         <!-- Day and month display -->
-        <LinearLayout
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_gravity="center_vertical">
 
             <TextView
                 android:id="@+id/day_display_2d"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:textColor="#FF6040"
-                android:textSize="14sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 android:text="04" />
 
@@ -172,11 +193,13 @@
                 android:id="@+id/month_display_2d"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="-2dp"
                 android:textColor="#FF6040"
-                android:textSize="14sp"
+                android:textSize="11sp"
                 android:textStyle="bold"
                 android:text="APR" />
-        </LinearLayout>
+        </FrameLayout>
     </LinearLayout>
 
 </FrameLayout>
