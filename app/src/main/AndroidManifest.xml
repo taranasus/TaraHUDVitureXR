@@ -5,6 +5,8 @@
 
     <!-- Required permission for foreground service -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- Required permission for wake lock to keep HUD active when screen is off -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"

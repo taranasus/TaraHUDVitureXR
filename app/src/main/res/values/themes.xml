@@ -1,7 +1,10 @@
 <resources>
 
-    <style name="Theme.SensorDemo" parent="@style/Theme.AppCompat.NoActionBar" />
-<!--    <style name="Theme.SensorDemo" parent="@style/Theme.Leanback" />-->
+    <style name="Theme.SensorDemo" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="android:fontFamily">@font/rajdhani</item>
+        <item name="fontFamily">@font/rajdhani</item>
+    </style>
+    <!--    <style name="Theme.SensorDemo" parent="@style/Theme.Leanback" />-->
 
     <style name="Theme.SensorDemo.Fullscreen" parent="Theme.SensorDemo">
         <item name="android:windowFullscreen">true</item>

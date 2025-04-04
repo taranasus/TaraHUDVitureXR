@@ -97,34 +97,53 @@ When making changes to this project, please follow these steps:
 
 ## Architecture Overview
 
-The application uses a client-server architecture pattern within the app:
+The application uses a client-server architecture pattern within the app, with a modular separation of responsibilities:
 
-1. **GlassesDisplayService** (Server)
+1. **GlassesDisplayService** (Server Coordinator)
    - Runs as a foreground service with a persistent notification
-   - Manages VITURE SDK initialization and lifecycle
-   - Handles display connection and presentation
-   - Controls the HUD content (2D/3D modes, visibility)
+   - Coordinates between specialized manager components
+   - Provides a clean public API for the Activity to use
    - Continues to run in the background when other apps are in focus
 
-2. **FullscreenActivity** (Client)
+2. **VitureSDKManager** (SDK Interface)
+   - Handles all VITURE SDK initialization and lifecycle
+   - Manages SDK callbacks and events
+   - Controls 3D mode settings
+   - Provides an event listener interface for state changes
+
+3. **DisplayPresentationManager** (Display Handler)
+   - Manages external display detection and connection events
+   - Handles presentation creation and lifecycle
+   - Controls what's shown on the glasses display
+   - Provides an event listener interface for display changes
+
+4. **GlassesPresentation** (UI Component)
+   - Implements the actual UI displayed on the glasses
+   - Handles immersive mode and fullscreen settings
+   - Controls visibility of UI elements based on display mode
+
+5. **FullscreenActivity** (Client)
    - Provides the user interface for controlling the HUD
    - Binds to the GlassesDisplayService using Android's service binding mechanism
    - Sends commands to the service based on user interaction
    - Updates UI to reflect the current state of the service
 
-This separation allows the HUD to remain active even when the activity is destroyed or other apps are in the foreground.
+This modular separation allows for better maintainability and a clear separation of concerns within the codebase, while still enabling the HUD to remain active even when the activity is destroyed or other apps are in the foreground.
 
-## Next dev tasks:
-- **Screen-Off Display Persistence**: Implement wake lock functionality to keep the HUD visible on the glasses even when the phone screen is turned off, allowing for extended use without needing to keep the phone screen on (requires WAKE_LOCK permission and will increase battery consumption)
+## Next Dev Task:
+- None at this time.
 
 ## Next Testing Task:
 - Test background service implementation: Verify that the glasses HUD continues to work when the app is in the background and a different app is open. The HUD should remain visible on the glasses even when the phone is showing other applications.
+- Test screen-off display persistence: Verify that the glasses HUD remains visible when the phone screen is turned off. Test this in different scenarios: screen timeout, manual power button press, and after extended periods with the screen off.
+- Test DateTime is displayed in the glasses.
+- Test Font has been changed to desired font, both in glasses and in the app.
 
 ## Next human tasks:
-- Design an official HUD layout to then figure out what features to build into the glassess
+- Design an official HUD layout to then figure out what features to build into the glassess.
 
 ## Feature Ideas:
-- Display Date and Time
+- Display the phone battery level as a health bar in the top-left corner of the glassess UI. Use this as inspiration for what the health bar should look like https://kagi.com/proxy/01-HUD_res-1920x1080.jpg?c=r3ruTN54uRUfKZ7YQWAyRjrcWRhLwbKbHxR-z9yws1vBMoyguZdt02IJ_DYtUKGHZ-LtcvlFORMi4p4yTKXBIvm_BSb4rpHkbTn7XBjOeAziuDqXFJjVldjTFfXFJPlS
 - Main UI interface that's always up HUD for regular outside usage
 - Various different UIs for specialized needs with a main home interface (Just like the menu system in a game)
 - Make interface look like Cyberpunk 2077 interface
@@ -146,6 +165,11 @@ This separation allows the HUD to remain active even when the activity is destro
 - Music widget inside the glassess with waveform cause I like waveforms
 - Notifications display
 - A little Bluetooth controller with some buttons that fits in one hand in order to control the UI without getting the phone out and simulate that Videogame experience. Needs at least 6 buttson (up,down,left,right,confirm,cancel)
+
+## Completed
+- Boilerplate implementation
+- Refactoring of GlassesDisplayService so that it's smaller.
+- Implemented Rajdhani-Medium font as the default font for the entire app.
 
 ## Development Notes
 
