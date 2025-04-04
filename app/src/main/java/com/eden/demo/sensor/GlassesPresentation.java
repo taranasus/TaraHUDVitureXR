@@ -167,10 +167,10 @@ public class GlassesPresentation extends Presentation {
     private void createSignalBars(LinearLayout container) {
         container.removeAllViews();
         
-        // Add spacing at the beginning
+        // No spacing at the beginning to align with bars above
         View spacer = new View(getContext());
         LinearLayout.LayoutParams spacerParams = new LinearLayout.LayoutParams(
-                5, ViewGroup.LayoutParams.MATCH_PARENT);
+                0, ViewGroup.LayoutParams.MATCH_PARENT);
         container.addView(spacer, spacerParams);
         
         // Create individual signal segments with small gaps between them
