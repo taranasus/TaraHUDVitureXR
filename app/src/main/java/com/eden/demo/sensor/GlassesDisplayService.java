@@ -48,9 +48,10 @@ public class GlassesDisplayService extends Service implements
         super.onCreate();
         Log.d(TAG, "Service onCreate");
         
-        // Initialize managers
-        mVitureSDKManager = new VitureSDKManager(this, this);
+        // Initialize managers - DisplayManager first, then VitureSDKManager
+        // This ensures the DisplayManager is ready when VitureSDKManager's callbacks are triggered
         mDisplayManager = new DisplayPresentationManager(this, this);
+        mVitureSDKManager = new VitureSDKManager(this, this);
         
         // Initialize wake lock to keep CPU running when screen is off
         PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -209,7 +210,9 @@ public class GlassesDisplayService extends Service implements
     public void on3DModeStateChanged(boolean enabled) {
         Log.d(TAG, "3D mode state changed: " + enabled);
         // Update display presentation with new 3D mode
-        mDisplayManager.setDisplayMode(enabled);
+        if (mDisplayManager != null) {
+            mDisplayManager.setDisplayMode(enabled);
+        }
     }
     
     @Override

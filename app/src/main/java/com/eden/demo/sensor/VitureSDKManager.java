@@ -47,10 +47,7 @@ public class VitureSDKManager {
         mSdkInitSuccess = mArManager.init();
         mArManager.setLogOn(true);
         
-        // Enable 3D mode automatically after initialization
-        if (mSdkInitSuccess == Constants.ERROR_INIT_SUCCESS) {
-            enable3DMode();
-        }
+        // We'll defer enabling 3D mode until after all callbacks are registered
         
         mCallback = new ArCallback() {
             @Override
@@ -98,6 +95,11 @@ public class VitureSDKManager {
      * Enable 3D mode for the XR glasses
      */
     private void enable3DMode() {
+        if (mArManager == null) {
+            Log.e(TAG, "Cannot enable 3D mode: ArManager is null");
+            return;
+        }
+        
         int result = mArManager.set3D(true);
         if (result == Constants.ERR_SET_SUCCESS) {
             mIs3DModeEnabled = true;

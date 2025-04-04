@@ -91,6 +91,11 @@ public class DisplayPresentationManager {
      * Check for external displays and set up presentation if found
      */
     private void checkForExternalDisplay() {
+        if (mDisplayManager == null) {
+            Log.e(TAG, "Cannot check for external displays: DisplayManager is null");
+            return;
+        }
+        
         Display[] displays = mDisplayManager.getDisplays(DisplayManager.DISPLAY_CATEGORY_PRESENTATION);
         
         if (displays.length > 0) {
