@@ -66,8 +66,8 @@
             <LinearLayout
                 android:id="@+id/segment_bar_right"
                 android:layout_width="200dp"
-                android:layout_height="8dp"
-                android:layout_marginTop="3dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="-6dp"
                 android:orientation="horizontal"
                 android:background="@drawable/segment_bar_background">
 
@@ -164,8 +164,8 @@
             <LinearLayout
                 android:id="@+id/segment_bar_2d"
                 android:layout_width="200dp"
-                android:layout_height="8dp"
-                android:layout_marginTop="3dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="-6dp"
                 android:orientation="horizontal"
                 android:background="@drawable/segment_bar_background">
 
