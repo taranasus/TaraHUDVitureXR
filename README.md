@@ -130,7 +130,6 @@ The application uses a client-server architecture pattern within the app, with a
 
 This modular separation allows for better maintainability and a clear separation of concerns within the codebase, while still enabling the HUD to remain active even when the activity is destroyed or other apps are in the foreground.
 
-
 ## Development Notes
 
 ### Background Service Implementation

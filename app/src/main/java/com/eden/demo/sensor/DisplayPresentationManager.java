@@ -181,6 +181,69 @@ public class DisplayPresentationManager {
     }
     
     /**
+     * Ensure the glasses display stays active even when the phone screen is off
+     * This is called when the phone screen is turned off
+     */
+    public void ensureDisplayActive() {
+        // If we already have a valid presentation and display, we just need to make sure
+        // it's refreshed to prevent it from being disconnected when the screen turns off
+        if (mGlassesPresentation != null && mExternalDisplay != null) {
+            Log.d(TAG, "Ensuring glasses presentation stays active during screen off");
+            
+            // Force a display mode update to refresh the connection
+            mGlassesPresentation.setDisplayMode(mIs3DModeEnabled);
+            
+            // If the green box is visible, make sure it stays visible
+            if (mGlassesPresentation.isGreenBoxVisible()) {
+                mGlassesPresentation.setGreenBoxVisibility(true);
+            }
+        } else {
+            // If we don't have a valid presentation, try to reconnect
+            Log.d(TAG, "No active presentation, checking for external display");
+            checkForExternalDisplay();
+        }
+    }
+    
+    /**
+     * Refresh the display after the phone screen turns back on
+     * This ensures the presentation is properly displayed after wake
+     */
+    public void refreshDisplay() {
+        Log.d(TAG, "Refreshing display after screen turned on");
+        
+        // Check if we need to recreate the presentation
+        if (mExternalDisplay != null) {
+            boolean needsRefresh = false;
+            
+            // If the presentation is null or dismissed, we need to recreate it
+            if (mGlassesPresentation == null) {
+                needsRefresh = true;
+            } else {
+                try {
+                    // Check if the presentation window is still valid
+                    mGlassesPresentation.getWindow();
+                } catch (Exception e) {
+                    // If we get an exception, the presentation window is no longer valid
+                    Log.e(TAG, "Presentation window is invalid, will recreate", e);
+                    needsRefresh = true;
+                }
+            }
+            
+            if (needsRefresh) {
+                Log.d(TAG, "Recreating presentation after screen on");
+                showPresentation(mExternalDisplay);
+            } else {
+                // Just refresh the existing presentation
+                Log.d(TAG, "Refreshing existing presentation");
+                mGlassesPresentation.setDisplayMode(mIs3DModeEnabled);
+            }
+        } else {
+            // No external display, check for one
+            checkForExternalDisplay();
+        }
+    }
+    
+    /**
      * Clean up resources when no longer needed
      */
     public void release() {

@@ -18,6 +18,7 @@ public class VitureSDKManager {
     private ArCallback mCallback;
     private int mSdkInitSuccess = -1;
     private boolean mIs3DModeEnabled = true; // Default to 3D mode
+    private boolean mIsKeepingAlive = false; // Track if we're in keep-alive mode
 
     // Callback interface for SDK events
     public interface VitureSDKEventListener {
@@ -146,10 +147,83 @@ public class VitureSDKManager {
     }
 
     /**
+     * Keep the glasses display active during screen off
+     * This is called when the phone screen is turned off
+     */
+    public void keepDisplayActiveOnScreenOff() {
+        if (mArManager == null || mSdkInitSuccess != Constants.ERROR_INIT_SUCCESS) {
+            Log.e(TAG, "Cannot keep display active: ArManager is null or not initialized");
+            return;
+        }
+
+        Log.d(TAG, "Activating keep-alive mode for glasses display");
+        
+        try {
+            // Refresh the current display mode to maintain active connection
+            int result = mArManager.set3D(mIs3DModeEnabled);
+            if (result == Constants.ERR_SET_SUCCESS) {
+                Log.d(TAG, "Display mode refreshed successfully");
+            } else {
+                Log.e(TAG, "Failed to refresh display mode: " + result);
+            }
+            
+            // Set 3D mode again to ensure the display stays active
+            // This helps maintain the signal to the glasses
+            if (mIs3DModeEnabled) {
+                // If already in 3D mode, toggle to 2D and back to force a refresh
+                mArManager.set3D(false);
+                mArManager.set3D(true);
+            } else {
+                // If in 2D mode, toggle to 3D and back to force a refresh
+                mArManager.set3D(true);
+                mArManager.set3D(false);
+            }
+            
+            mIsKeepingAlive = true;
+            Log.d(TAG, "Keep-alive mode activated for glasses");
+        } catch (Exception e) {
+            Log.e(TAG, "Error setting keep-alive mode", e);
+        }
+    }
+    
+    /**
+     * Reset normal operation when screen turns back on
+     */
+    public void resetDisplayOnScreenOn() {
+        if (mArManager == null || mSdkInitSuccess != Constants.ERROR_INIT_SUCCESS) {
+            return;
+        }
+        
+        if (mIsKeepingAlive) {
+            Log.d(TAG, "Resetting display after screen on");
+            try {
+                // Refresh the 3D mode to ensure display is showing correctly
+                mArManager.set3D(mIs3DModeEnabled);
+                
+                mIsKeepingAlive = false;
+                Log.d(TAG, "Normal mode restored");
+            } catch (Exception e) {
+                Log.e(TAG, "Error resetting display", e);
+            }
+        }
+    }
+    
+    /**
      * Clean up resources when no longer needed
      */
     public void release() {
         if (mArManager != null) {
+            // If we're in keep-alive mode, reset it before releasing
+            if (mIsKeepingAlive) {
+                try {
+                    // Restore original display mode before releasing
+                    mArManager.set3D(mIs3DModeEnabled);
+                    mIsKeepingAlive = false;
+                } catch (Exception e) {
+                    Log.e(TAG, "Error resetting display mode during release", e);
+                }
+            }
+            
             if (mCallback != null) {
                 mArManager.unregisterCallback(mCallback);
             }

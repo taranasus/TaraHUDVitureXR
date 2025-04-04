@@ -12,7 +12,7 @@
 8. You are done
 
 ## Next Dev Task:
-- While the glassess UI still displays when navigating to a different app, as expected, when pressing the power button on the phone the glasses also get turned off, and when pressing the power button on the phone again the glassess get turned on again. The expected behaviour is for the phone screen to turn off while the glassess still remain powered. 
+-
 
 ## Next Testing Task:
 -
@@ -53,4 +53,5 @@
 - Test background service implementation: Verify that the glasses HUD continues to work when the app is in the background and a different app is open. The HUD should remain visible on the glasses even when the phone is showing other applications.
 
 ## ON HOLD
-- Make it automatically switch the glasses to be transparent (not opaque) when the app starts - Not possible in current version of SDK (1.0.7) but dev team said they're working on it so might be in the next version when it drops. On hold for now.
+- Not possible in current version of SDK (1.0.7) but dev team said they're working on it so might be in the next version when it drops. On hold for now.- Make it automatically switch the glasses to be transparent (not opaque) when the app starts.
+- NOT POSSIBLE WITHOUT ROOT ACCESS - While the glassess UI still displays when navigating to a different app, as expected, when pressing the power button on the phone the glasses also get turned off, and when pressing the power button on the phone again the glassess get turned on again. The expected behaviour is for the phone screen to turn off while the glassess still remain powered. 

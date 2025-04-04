@@ -159,6 +159,21 @@ public class GlassesPresentation extends Presentation {
     }
     
     /**
+     * Check if the green box is currently visible
+     * 
+     * @return True if the green box is visible in the current display mode
+     */
+    public boolean isGreenBoxVisible() {
+        if (mCurrentlyIn3DMode) {
+            return mGlassesRightEyeText != null && 
+                   mGlassesRightEyeText.getVisibility() == View.VISIBLE;
+        } else {
+            return mGlasses2DText != null && 
+                   mGlasses2DText.getVisibility() == View.VISIBLE;
+        }
+    }
+    
+    /**
      * Enable immersive mode for the presentation
      */
     private void enablePresentationImmersiveMode() {

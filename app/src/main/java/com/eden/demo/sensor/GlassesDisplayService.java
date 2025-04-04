@@ -5,8 +5,10 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
@@ -31,8 +33,13 @@ public class GlassesDisplayService extends Service implements
     private VitureSDKManager mVitureSDKManager;
     private DisplayPresentationManager mDisplayManager;
     
-    // Wake lock to keep CPU running when screen is off
-    private PowerManager.WakeLock mWakeLock;
+    // Wake locks for power management
+    private PowerManager.WakeLock mCpuWakeLock; // Keeps CPU running
+    private PowerManager.WakeLock mScreenWakeLock; // Keeps screen on
+
+    // Screen state tracking
+    private boolean mIsScreenOn = true;
+    private BroadcastReceiver mScreenStateReceiver;
     
     // Binder for activity communication
     private final IBinder mBinder = new LocalBinder();
@@ -53,12 +60,85 @@ public class GlassesDisplayService extends Service implements
         mDisplayManager = new DisplayPresentationManager(this, this);
         mVitureSDKManager = new VitureSDKManager(this, this);
         
-        // Initialize wake lock to keep CPU running when screen is off
+        // Initialize wake locks
         PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        mWakeLock = powerManager.newWakeLock(
+        
+        // CPU wake lock to keep the service running
+        mCpuWakeLock = powerManager.newWakeLock(
                 PowerManager.PARTIAL_WAKE_LOCK, 
-                "TaraHUD:GlassesDisplayWakeLock");
-        mWakeLock.setReferenceCounted(false);
+                "TaraHUD:GlassesDisplayCpuWakeLock");
+        mCpuWakeLock.setReferenceCounted(false);
+        
+        // Screen wake lock to keep the screen (and thus glasses) on
+        mScreenWakeLock = powerManager.newWakeLock(
+                PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP,
+                "TaraHUD:GlassesDisplayScreenWakeLock");
+        mScreenWakeLock.setReferenceCounted(false);
+        
+        // Initialize and register screen on/off receiver
+        registerScreenStateReceiver();
+    }
+    
+    /**
+     * Register a receiver for screen on/off events
+     */
+    private void registerScreenStateReceiver() {
+        mScreenStateReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+                    mIsScreenOn = false;
+                    Log.d(TAG, "Screen turned OFF - Reactivating screen to maintain glasses display");
+                    
+                    // Force the screen to stay on to keep glasses running
+                    acquireScreenWakeLock();
+                    
+                } else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
+                    mIsScreenOn = true;
+                    Log.d(TAG, "Screen turned ON");
+                    
+                    // Refresh the glasses display
+                    if (mDisplayManager != null && mDisplayManager.areGlassesConnected()) {
+                        Log.d(TAG, "Refreshing glasses display after screen on");
+                        mDisplayManager.refreshDisplay();
+                    }
+                }
+            }
+        };
+        
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        filter.addAction(Intent.ACTION_SCREEN_ON);
+        registerReceiver(mScreenStateReceiver, filter);
+        Log.d(TAG, "Screen state receiver registered");
+    }
+    
+    /**
+     * Acquire the screen wake lock to force the screen to stay on
+     */
+    private void acquireScreenWakeLock() {
+        if (mScreenWakeLock != null && !mScreenWakeLock.isHeld()) {
+            mScreenWakeLock.acquire(10*60*1000L); // 10 minutes timeout for safety
+            Log.d(TAG, "Screen wake lock acquired to keep glasses display active");
+        }
+    }
+    
+    /**
+     * Ensure glasses display stays active by keeping screen on
+     */
+    private void ensureGlassesDisplayActive() {
+        if (mDisplayManager != null && mDisplayManager.areGlassesConnected()) {
+            Log.d(TAG, "Forcing display connection to remain active");
+            mDisplayManager.ensureDisplayActive();
+            
+            // Use the VitureSDK to specifically keep glasses powered
+            if (mVitureSDKManager != null && mVitureSDKManager.isInitialized()) {
+                mVitureSDKManager.keepDisplayActiveOnScreenOff();
+            }
+            
+            // Acquire the screen wake lock to keep the screen on
+            acquireScreenWakeLock();
+        }
     }
     
     @Override
@@ -74,11 +154,14 @@ public class GlassesDisplayService extends Service implements
         // Start as a foreground service
         startForeground(NOTIFICATION_ID, notification);
         
-        // Acquire wake lock to keep CPU running when screen is off
-        if (mWakeLock != null && !mWakeLock.isHeld()) {
-            mWakeLock.acquire();
-            Log.d(TAG, "Wake lock acquired");
+        // Acquire CPU wake lock to keep service running
+        if (mCpuWakeLock != null && !mCpuWakeLock.isHeld()) {
+            mCpuWakeLock.acquire();
+            Log.d(TAG, "CPU wake lock acquired");
         }
+        
+        // Acquire screen wake lock to keep screen on
+        acquireScreenWakeLock();
         
         // If we get killed, restart with our last intent
         return START_REDELIVER_INTENT;
@@ -94,10 +177,27 @@ public class GlassesDisplayService extends Service implements
         super.onDestroy();
         Log.d(TAG, "Service onDestroy");
         
-        // Release wake lock if held
-        if (mWakeLock != null && mWakeLock.isHeld()) {
-            mWakeLock.release();
-            Log.d(TAG, "Wake lock released");
+        // Unregister the screen state receiver
+        if (mScreenStateReceiver != null) {
+            try {
+                unregisterReceiver(mScreenStateReceiver);
+                Log.d(TAG, "Screen state receiver unregistered");
+            } catch (IllegalArgumentException e) {
+                Log.e(TAG, "Error unregistering screen state receiver", e);
+            }
+            mScreenStateReceiver = null;
+        }
+        
+        // Release CPU wake lock if held
+        if (mCpuWakeLock != null && mCpuWakeLock.isHeld()) {
+            mCpuWakeLock.release();
+            Log.d(TAG, "CPU wake lock released");
+        }
+        
+        // Release screen wake lock if held
+        if (mScreenWakeLock != null && mScreenWakeLock.isHeld()) {
+            mScreenWakeLock.release();
+            Log.d(TAG, "Screen wake lock released");
         }
         
         // Clean up managers
@@ -143,7 +243,7 @@ public class GlassesDisplayService extends Service implements
         // Build the notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("TaraHUD Active")
-                .setContentText("HUD is currently active on XR glasses")
+                .setContentText("HUD is active on XR glasses - Screen kept on for glasses display")
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
                 .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_LOW);
