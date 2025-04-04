@@ -7,43 +7,205 @@
     android:keepScreenOn="true">
 
     <!-- 
-        For 3D mode (3840x1080): This TextView will only be visible in the right eye
-        For right eye placement, we position it at the right edge
+        For 3D mode (3840x1080): This layout will appear in right eye
+        For left eye placement, we position it at the left edge
      -->
-    <TextView
-        android:id="@+id/glasses_right_eye_text"
-        android:layout_width="120dp"
+    <LinearLayout
+        android:id="@+id/hud_layout_right_eye"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
+        android:layout_gravity="top|start"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/green_border_box"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="ONLINE"
-        android:textColor="#00FF00"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:visibility="visible" />
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <!-- Left section with time display -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            
+            <!-- Small red indicator dot -->
+            <TextView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="2dp"
+                android:background="#FF0000"
+                android:textColor="#FF0000" />
+                
+            <!-- Time display box -->
+            <TextView
+                android:id="@+id/time_display_right"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/cyan_box_background"
+                android:gravity="center"
+                android:text="00"
+                android:textColor="#00DDDD"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="13" />
+        </LinearLayout>
+
+        <!-- Right section with health and signal bars -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:orientation="vertical">
+
+            <!-- Battery health bar -->
+            <ProgressBar
+                android:id="@+id/battery_bar_right"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="200dp"
+                android:layout_height="12dp"
+                android:layout_marginTop="10dp"
+                android:progress="75"
+                android:progressDrawable="@drawable/health_bar_progress" />
+
+            <!-- Signal strength bar - using horizontal LinearLayout with segments -->
+            <LinearLayout
+                android:id="@+id/signal_layout_right"
+                android:layout_width="200dp"
+                android:layout_height="8dp"
+                android:layout_marginTop="3dp"
+                android:orientation="horizontal"
+                android:background="@drawable/signal_bar_background">
+
+                <!-- Signal segments will be added programmatically -->
+            </LinearLayout>
+
+            <!-- Day and month display -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/day_display_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="#FF6040"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:text="315" />
+
+                <TextView
+                    android:id="@+id/month_display_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FF6040"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:text="405" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
     <!-- 
-        For 2D mode (1920x1080): This TextView will be visible in both eyes
-        Positioned in the top-right corner of the 2D display
+        For 2D mode (1920x1080): Same layout for both eyes
+        Positioned in the top-left corner of the 2D display
      -->
-    <TextView
-        android:id="@+id/glasses_2d_text"
-        android:layout_width="120dp"
+    <LinearLayout
+        android:id="@+id/hud_layout_2d"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
+        android:layout_gravity="top|start"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/green_border_box"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="ONLINE"
-        android:textColor="#00FF00"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:visibility="gone" />
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <!-- Left section with time display -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            
+            <!-- Small red indicator dot -->
+            <TextView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="2dp"
+                android:background="#FF0000"
+                android:textColor="#FF0000" />
+                
+            <!-- Time display box -->
+            <TextView
+                android:id="@+id/time_display_2d"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/cyan_box_background"
+                android:gravity="center"
+                android:text="00"
+                android:textColor="#00DDDD"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="13" />
+        </LinearLayout>
+
+        <!-- Right section with health and signal bars -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:orientation="vertical">
+
+            <!-- Battery health bar -->
+            <ProgressBar
+                android:id="@+id/battery_bar_2d"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="200dp"
+                android:layout_height="12dp"
+                android:layout_marginTop="10dp"
+                android:progress="75"
+                android:progressDrawable="@drawable/health_bar_progress" />
+
+            <!-- Signal strength bar - using horizontal LinearLayout with segments -->
+            <LinearLayout
+                android:id="@+id/signal_layout_2d"
+                android:layout_width="200dp"
+                android:layout_height="8dp"
+                android:layout_marginTop="3dp"
+                android:orientation="horizontal"
+                android:background="@drawable/signal_bar_background">
+
+                <!-- Signal segments will be added programmatically -->
+            </LinearLayout>
+
+            <!-- Day and month display -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/day_display_2d"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="#FF6040"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:text="315" />
+
+                <TextView
+                    android:id="@+id/month_display_2d"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FF6040"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:text="405" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
 </FrameLayout>

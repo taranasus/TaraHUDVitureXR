@@ -12,7 +12,7 @@
 8. You are done
 
 ## Next Dev Task:
-- 
+-
 
 ## Next Testing Task:
 - Display the phone battery level as a health bar in the top-left corner of the glassess UI. Remove the current items displayed on the glassess UI and instead make an interface that looks exactly like the one portraid in this image (/Users/justinpopa/Repos/TaraHUDVirtuoXR/Documentation/TopLeftUI.jpg) with the following changes:
@@ -58,4 +58,4 @@
 
 ## ON HOLD
 - Not possible in current version of SDK (1.0.7) but dev team said they're working on it so might be in the next version when it drops. On hold for now.- Make it automatically switch the glasses to be transparent (not opaque) when the app starts.
-- NOT POSSIBLE WITHOUT ROOT ACCESS - While the glassess UI still displays when navigating to a different app, as expected, when pressing the power button on the phone the glasses also get turned off, and when pressing the power button on the phone again the glassess get turned on again. The expected behaviour is for the phone screen to turn off while the glassess still remain powered. 
+- NOT POSSIBLE WITHOUT ROOT ACCESS - While the glassess UI still displays when navigating to a different app, as expected, when pressing the power button on the phone the glasses also get turned off, and when pressing the power button on the phone again the glassess get turned on again. The expected behaviour is for the phone screen to turn off while the glassess still remain powered.

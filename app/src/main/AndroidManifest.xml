@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <!-- Required permission for wake lock to keep HUD active when screen is off -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- Required permission for reading phone state (signal strength) -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
