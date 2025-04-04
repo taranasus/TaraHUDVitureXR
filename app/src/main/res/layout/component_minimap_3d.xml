@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/map_container_3d"
+    android:layout_width="300dp"
+    android:layout_height="200dp"
+    android:layout_gravity="top|end"
+    android:layout_marginEnd="20dp"
+    android:layout_marginTop="20dp"
+    android:background="#33FFFFFF">
+
+    <fragment
+        android:id="@+id/map_fragment_3d"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+        
+    <!-- Border overlay to make it look more like a game minimap -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/green_border_box" />
+</FrameLayout>

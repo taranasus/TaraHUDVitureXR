@@ -35,10 +35,14 @@ android {
 }
 
 dependencies {
-
+    // Base dependencies
     implementation 'androidx.leanback:leanback:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.4.0'
-
+    
+    // Google Maps for minimap
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    
+    // Local libraries
     implementation fileTree(dir: 'libs', includes: ['*.jar', '*.aar'])
 }

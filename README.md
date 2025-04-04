@@ -11,6 +11,7 @@ This project demonstrates a dual-display Heads-Up Display (HUD) implementation f
 - Show/hide green "ONLINE" status indicator
 - True fullscreen immersive experience
 - Portrait mode for phone controls
+- Minimap display in the top-right corner (Google Maps integration)
 
 ## Implementation Details
 
@@ -29,13 +30,19 @@ The app showcases several key capabilities of the VITURE XR Glasses SDK:
 
 3. **Visual Elements**:
    - Black background on glasses for minimal visual interference
-   - Green-bordered box with "ONLINE" text
+   - Health stats display in the top-left corner (time, battery, signal strength)
+   - Minimap in the top-right corner with cyberpunk styling
    - Phone status updates and control buttons
 
 4. **Background Service**:
    - Persistent foreground service maintains the glasses display even when the app is in background
    - HUD remains visible when using other apps or when the phone screen is locked
    - Notification provides easy access back to the control UI
+
+5. **Component-Based Architecture**:
+   - Modular UI components for better maintainability
+   - Easy to add new HUD elements
+   - Cleaner separation of concerns
 
 ## Building and Running
 
@@ -45,6 +52,14 @@ This project is designed to be built and run using Android Studio:
 2. Connect your Android device with the VITURE XR Glasses attached
 3. Build and run the app on your device
 4. The phone will show the control UI, while the glasses will show the HUD
+
+### Google Maps Setup
+
+To use the minimap feature, you need to:
+
+1. Get a Google Maps API key from the [Google Cloud Console](https://console.cloud.google.com/)
+2. Enable the Maps SDK for Android in your Google Cloud project
+3. Replace "YOUR_API_KEY" in app/src/main/AndroidManifest.xml with your actual API key
 
 ## Phone Controls
 
@@ -75,6 +90,7 @@ For more comprehensive information about the VITURE XR Glasses SDK, please refer
 
 - Android 8.0 (API level 28) or higher
 - USB-C connection to the VITURE XR Glasses
+- Internet connection for Google Maps functionality
 
 ## Additional Resources
 
@@ -117,12 +133,18 @@ The application uses a client-server architecture pattern within the app, with a
    - Controls what's shown on the glasses display
    - Provides an event listener interface for display changes
 
-4. **GlassesPresentation** (UI Component)
-   - Implements the actual UI displayed on the glasses
+4. **GlassesPresentation** (UI Component Container)
+   - Manages the component-based UI system
    - Handles immersive mode and fullscreen settings
    - Controls visibility of UI elements based on display mode
 
-5. **FullscreenActivity** (Client)
+5. **UI Components** (Modular UI Elements)
+   - Each component handles its specific UI function
+   - HealthStatsComponent: Displays time, battery, and signal strength
+   - MiniMapComponent: Displays Google Maps in the top-right corner
+   - Future components can be easily added
+
+6. **FullscreenActivity** (Client)
    - Provides the user interface for controlling the HUD
    - Binds to the GlassesDisplayService using Android's service binding mechanism
    - Sends commands to the service based on user interaction
@@ -151,4 +173,3 @@ When testing background functionality:
 - The service will be killed if the app is force-stopped by the user or system
 - Some devices with aggressive battery optimization may still stop the service
 - For complete persistence, consider enabling "Ignore battery optimizations" for the app (requires additional permissions)
-
