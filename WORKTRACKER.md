@@ -12,12 +12,13 @@
 8. You are done
 
 ## Next Dev Task:
+- The signal bar of the top-left UI does not appear to actually show the signal strength fromt he phone. Perhaps it's a bug? Needs investigating.
 
 ## Next Testing Task:
-- Add a minimap in the top right of the glassess UI
+
+
 
 ## Feature Ideas:
-- The signal bar of the top-left UI does not appear to actually show the signal strength fromt he phone. Perhaps it's a bug? Needs investigating.
 - Move all the code for the top-left UI elements to a different file (called healthStats) or set of files and have that impored as a separate component in the main glassess_display activity. 
 - Marege the 2D and 3D layout in some way so that we don't keep duplicating layout code across the two vide modes.
 - Add to the healthStats two red Icons to the left of the clock, one should show the WiFi status, the other should be just a placeholder for now

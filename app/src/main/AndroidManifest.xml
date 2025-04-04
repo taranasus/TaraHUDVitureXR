@@ -9,9 +9,6 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!-- Required permission for reading phone state (signal strength) -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- Required permissions for Google Maps -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -20,17 +17,6 @@
         android:supportsRtl="true"
         tools:replace="android:theme"
         android:theme="@style/Theme.SensorDemo">
-        
-        <!-- Google Maps API key -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_API_KEY" />
-            
-        <!-- Optional compatibility library for older devices -->
-        <uses-library
-            android:name="org.apache.http.legacy"
-            android:required="false" />
-            
         <activity
             android:name=".FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
