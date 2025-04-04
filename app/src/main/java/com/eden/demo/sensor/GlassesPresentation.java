@@ -2,6 +2,7 @@ package com.eden.demo.sensor;
 
 import android.app.Presentation;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +13,8 @@ import android.view.WindowInsets;
 import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import android.widget.TextView;
+
+import androidx.core.content.res.ResourcesCompat;
 
 import com.eden.demo.sensor.databinding.GlassesDisplayBinding;
 
@@ -52,6 +55,13 @@ public class GlassesPresentation extends Presentation {
         // Get references to the green box text views
         mGlassesRightEyeText = mGlassesBinding.glassesRightEyeText; // For 3D mode
         mGlasses2DText = mGlassesBinding.glasses2dText; // For 2D mode
+        
+        // Apply the custom Rajdhani font to both text views
+        Typeface rajdhaniTypeface = ResourcesCompat.getFont(getContext(), R.font.rajdhani_medium);
+        if (rajdhaniTypeface != null) {
+            mGlassesRightEyeText.setTypeface(rajdhaniTypeface);
+            mGlasses2DText.setTypeface(rajdhaniTypeface);
+        }
         
         // Set initial display mode
         setDisplayMode(true); // Default to 3D mode
