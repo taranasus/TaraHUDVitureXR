@@ -21,33 +21,17 @@
         android:visibility="visible">
 
         <!-- Left section with time display -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            
-            <!-- Small red indicator dot -->
-            <TextView
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="2dp"
-                android:background="#FF0000"
-                android:textColor="#FF0000" />
-                
-            <!-- Time display box -->
-            <TextView
-                android:id="@+id/time_display_right"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/cyan_box_background"
-                android:gravity="center"
-                android:text="00"
-                android:textColor="#00DDDD"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:text="13" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/time_display_right"
+            android:layout_width="65dp"
+            android:layout_height="40dp"
+            android:background="@drawable/cyan_box_background"
+            android:gravity="center"
+            android:text="00:00"
+            android:textColor="#00DDDD"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="13:40" />
 
         <!-- Right section with health and signal bars -->
         <LinearLayout
@@ -55,16 +39,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:orientation="vertical">
-
-            <!-- Battery health bar -->
-            <ProgressBar
-                android:id="@+id/battery_bar_right"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="200dp"
-                android:layout_height="12dp"
-                android:layout_marginTop="10dp"
-                android:progress="75"
-                android:progressDrawable="@drawable/health_bar_progress" />
 
             <!-- Signal strength bar - using horizontal LinearLayout with segments -->
             <LinearLayout
@@ -78,32 +52,44 @@
                 <!-- Signal segments will be added programmatically -->
             </LinearLayout>
 
-            <!-- Day and month display -->
-            <LinearLayout
+            <!-- Battery health bar -->
+            <ProgressBar
+                android:id="@+id/battery_bar_right"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="200dp"
+                android:layout_height="12dp"
+                android:layout_marginTop="3dp"
+                android:progress="75"
+                android:progressDrawable="@drawable/health_bar_progress" />
+                
+        </LinearLayout>
+        
+        <!-- Day and month display -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/day_display_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:orientation="horizontal">
+                android:layout_marginEnd="5dp"
+                android:textColor="#FF6040"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="04" />
 
-                <TextView
-                    android:id="@+id/day_display_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:textColor="#FF6040"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:text="315" />
-
-                <TextView
-                    android:id="@+id/month_display_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#FF6040"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:text="405" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/month_display_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FF6040"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="APR" />
         </LinearLayout>
     </LinearLayout>
 
@@ -122,33 +108,17 @@
         android:visibility="gone">
 
         <!-- Left section with time display -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            
-            <!-- Small red indicator dot -->
-            <TextView
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="2dp"
-                android:background="#FF0000"
-                android:textColor="#FF0000" />
-                
-            <!-- Time display box -->
-            <TextView
-                android:id="@+id/time_display_2d"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/cyan_box_background"
-                android:gravity="center"
-                android:text="00"
-                android:textColor="#00DDDD"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:text="13" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/time_display_2d"
+            android:layout_width="65dp"
+            android:layout_height="40dp"
+            android:background="@drawable/cyan_box_background"
+            android:gravity="center"
+            android:text="00:00"
+            android:textColor="#00DDDD"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="13:40" />
 
         <!-- Right section with health and signal bars -->
         <LinearLayout
@@ -156,16 +126,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:orientation="vertical">
-
-            <!-- Battery health bar -->
-            <ProgressBar
-                android:id="@+id/battery_bar_2d"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="200dp"
-                android:layout_height="12dp"
-                android:layout_marginTop="10dp"
-                android:progress="75"
-                android:progressDrawable="@drawable/health_bar_progress" />
 
             <!-- Signal strength bar - using horizontal LinearLayout with segments -->
             <LinearLayout
@@ -179,32 +139,43 @@
                 <!-- Signal segments will be added programmatically -->
             </LinearLayout>
 
-            <!-- Day and month display -->
-            <LinearLayout
+            <!-- Battery health bar -->
+            <ProgressBar
+                android:id="@+id/battery_bar_2d"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="200dp"
+                android:layout_height="12dp"
+                android:layout_marginTop="3dp"
+                android:progress="75"
+                android:progressDrawable="@drawable/health_bar_progress" />
+        </LinearLayout>
+        
+        <!-- Day and month display -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/day_display_2d"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:orientation="horizontal">
+                android:layout_marginEnd="5dp"
+                android:textColor="#FF6040"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="04" />
 
-                <TextView
-                    android:id="@+id/day_display_2d"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:textColor="#FF6040"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:text="315" />
-
-                <TextView
-                    android:id="@+id/month_display_2d"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#FF6040"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:text="405" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/month_display_2d"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FF6040"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="APR" />
         </LinearLayout>
     </LinearLayout>
 

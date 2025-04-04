@@ -77,7 +77,7 @@ public class GlassesPresentation extends Presentation {
         super(context, display);
         
         // Initialize date formats
-        mTimeFormat = new SimpleDateFormat("HH", Locale.getDefault());
+        mTimeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
         mMonthFormat = new SimpleDateFormat("MMM", Locale.getDefault());
         
         // Initialize signal segment drawable
@@ -335,18 +335,15 @@ public class GlassesPresentation extends Presentation {
      */
     private void updateDateDisplay() {
         Calendar calendar = Calendar.getInstance();
-        int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         String monthAbbr = mMonthFormat.format(calendar.getTime());
         
-        // Format as day of year (e.g., 315)
-        String dayDisplay = String.format(Locale.getDefault(), "%03d", dayOfYear);
-        
-        // Format month as 3 letter abbrev + index (e.g., APR -> 405)
-        int monthIndex = calendar.get(Calendar.MONTH) + 1;
-        String monthDisplay = String.format(Locale.getDefault(), "%03d", (monthIndex * 100) + 5);
+        // Format as day of month (e.g., 04)
+        String dayDisplay = String.format(Locale.getDefault(), "%02d", dayOfMonth);
         
         // Convert month abbreviation to uppercase
         monthAbbr = monthAbbr.toUpperCase(Locale.getDefault());
+        String monthDisplay = monthAbbr;
         
         // Update 3D mode displays
         if (mDayDisplay3D != null) {
