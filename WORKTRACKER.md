@@ -15,8 +15,6 @@
 
 
 ## Next Testing Task:
-- Adjust the minimap again as it's now too zoomed in and also make the minimap just a little bit bigger in the UI as it's a bit too small. Plus please also give it a border as the minimap in cyberpunk 2077 has a border around it.
-
 
 
 
@@ -63,6 +61,8 @@ You need to follow the implementation plan written down here minimap_implementat
 - Move all the code for the top-left UI elements to a different file (called healthStats) or set of files and have that imported as a separate component in the main glasses_display activity.
 - The health component has three bars that display data. Top one displays phone signal, middle displays phone battery, lower one doesn't display anything, it used to just be set to a constant hardcoded valu so I can see it's there. However the bottom bar isn't visible in testing anymore. I assume this is because for some reason the hardcoded valu is 0. This needs to be investigated and set the value to something else if it's just a matter of it being set to 0. If that's not the issue then there's a bug somehwere and needs to be fixed. (Fix: Removed duplicate layout in glasses_display.xml and made HealthStats component visible).
 - Adjust the minimap so it's more thematically accurate with the cyberpunk 2077 minimap. Also make it a little more zoomed in I think.
+- Adjust the minimap again as it's now too zoomed in and also make the minimap just a little bit bigger in the UI as it's a bit too small. Plus please also give it a border as the minimap in cyberpunk 2077 has a border around it.
+
 
 
 ## ON HOLD
