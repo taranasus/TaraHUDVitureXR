@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black"
@@ -122,7 +123,7 @@
         <!-- Left section with time display -->
         <TextView
             android:id="@+id/time_display_2d"
-            android:layout_width="65dp"
+            android:layout_width="55dp"
             android:layout_height="40dp"
             android:background="@drawable/cyan_box_background"
             android:gravity="center"
@@ -144,7 +145,7 @@
                 android:id="@+id/signal_layout_2d"
                 android:layout_width="200dp"
                 android:layout_height="5dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="0dp"
                 android:orientation="horizontal"
                 android:background="@drawable/signal_bar_background_updated">
 
@@ -155,8 +156,8 @@
             <ProgressBar
                 android:id="@+id/battery_bar_2d"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="200dp"
-                android:layout_height="15dp"
+                android:layout_width="300dp"
+                android:layout_height="18dp"
                 android:layout_marginTop="3dp"
                 android:progress="75"
                 android:progressDrawable="@drawable/health_bar_progress" />
@@ -166,8 +167,8 @@
                 android:id="@+id/segment_bar_2d"
                 android:layout_width="200dp"
                 android:layout_height="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="0dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="-4dp"
                 android:orientation="horizontal"
                 android:background="@drawable/segment_bar_background">
 
@@ -179,7 +180,7 @@
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="5dp"
             android:layout_gravity="center_vertical">
 
             <TextView
@@ -203,5 +204,25 @@
                 android:text="APR" />
         </FrameLayout>
     </LinearLayout>
+
+    <!-- Minimap for 3D mode (top-right corner) -->
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/minimap_3d"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:visibility="visible" />
+
+    <!-- Minimap for 2D mode (top-right corner) -->
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/minimap_2d"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:visibility="gone" />
 
 </FrameLayout>

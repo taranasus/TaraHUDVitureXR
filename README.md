@@ -7,7 +7,7 @@ A custom implementation using the VITURE XR Glasses SDK to create a minimal HUD 
 This project demonstrates a dual-display Heads-Up Display (HUD) implementation for the VITURE XR Glasses. It showcases the following features:
 
 - Separate phone and glasses displays
-- Toggle between 2D and 3D modes
+- Always uses 2D mode for display
 - Show/hide green "ONLINE" status indicator
 - True fullscreen immersive experience
 - Portrait mode for phone controls
@@ -16,10 +16,9 @@ This project demonstrates a dual-display Heads-Up Display (HUD) implementation f
 
 The app showcases several key capabilities of the VITURE XR Glasses SDK:
 
-1. **Display Mode Control**: 
-   - Toggle between 2D mode (1920×1080) and 3D mode (3840×1080)
-   - In 3D mode, the green "ONLINE" box is visible only in the right eye
-   - In 2D mode, the green "ONLINE" box is visible in both eyes
+1. **Display Mode**: 
+   - Always uses 2D mode (1920×1080)
+   - The green "ONLINE" box is visible in both eyes
 
 2. **Dual Display Management**:
    - Phone UI provides control buttons and status information
@@ -52,7 +51,7 @@ The phone UI provides the following controls:
 
 1. "Display Green Box" - Shows the green "ONLINE" indicator on the glasses
 2. "Hide Green Box" - Hides the green "ONLINE" indicator on the glasses
-3. "3D Mode" toggle - Switches between 2D and 3D display modes
+3. Status indicator - Shows "2D Mode Only" to indicate the display mode
 4. Status text - Shows information about connections and current state
 
 ## SDK Documentation
@@ -151,4 +150,3 @@ When testing background functionality:
 - The service will be killed if the app is force-stopped by the user or system
 - Some devices with aggressive battery optimization may still stop the service
 - For complete persistence, consider enabling "Ignore battery optimizations" for the app (requires additional permissions)
-

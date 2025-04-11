@@ -12,15 +12,14 @@
 8. You are done
 
 ## Next Dev Task:
-- The signal bar of the top-left UI does not appear to actually show the signal strength fromt he phone. Perhaps it's a bug? Needs investigating.
+
 
 ## Next Testing Task:
-
+- I no longer want to support both the 2D and 3D modes inside of the HUD. It's too much duplication of work. The toggle between 2d and 3d modes must be removed. It should always be forced to display in 2D mode. If 3D mode is detected it should be switched back to 2D mode. All 3D mode related code should be deleted from the project. Only 2D mode should be supported.
 
 
 ## Feature Ideas:
 - Move all the code for the top-left UI elements to a different file (called healthStats) or set of files and have that impored as a separate component in the main glassess_display activity. 
-- Marege the 2D and 3D layout in some way so that we don't keep duplicating layout code across the two vide modes.
 - Add to the healthStats two red Icons to the left of the clock, one should show the WiFi status, the other should be just a placeholder for now
 - Main UI interface that's always up HUD for regular outside usage.
 - Various different UIs for specialized needs with a main home interface (Just like the menu system in a game)
@@ -52,6 +51,12 @@
 - Implemented Rajdhani-Medium font as the default font for the entire app.
 - Test Font has been changed to desired font, both in glasses and in the app.
 - Test background service implementation: Verify that the glasses HUD continues to work when the app is in the background and a different app is open. The HUD should remain visible on the glasses even when the phone is showing other applications.
+- The signal bar of the top-left UI does not appear to actually show the signal strength fromt he phone. Perhaps it's a bug? Needs investigating.
+- Show a minimap on the HUD. The minimap should be displayed in the same location as shown in this image in roughly the same zice https://kagi.com/proxy/01-HUD_res-1920x1080.jpg?c=r3ruTN54uRUfKZ7YQWAyRjrcWRhLwbKbHxR-z9yws1vBMoyguZdt02IJ_DYtUKGHZ-LtcvlFORMi4p4yTKXBIvm_BSb4rpHkbTn7XBjOeAziuDqXFJjVldjTFfXFJPlS
+
+For now it doesn't need to be styalized like in the game, just implement whatever gets us faster to the goal of showing a minimap on the HUD with the user's location at its centre.
+
+You need to follow the implementation plan written down here minimap_implementation_plan.md in order to do this implementation succesfully. 
 
 ## ON HOLD
 - Not possible in current version of SDK (1.0.7) but dev team said they're working on it so might be in the next version when it drops. On hold for now.- Make it automatically switch the glasses to be transparent (not opaque) when the app starts.

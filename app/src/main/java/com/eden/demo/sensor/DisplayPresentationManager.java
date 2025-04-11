@@ -17,7 +17,7 @@ public class DisplayPresentationManager {
     private DisplayManager.DisplayListener mDisplayListener;
     private GlassesPresentation mGlassesPresentation;
     private Display mExternalDisplay;
-    private boolean mIs3DModeEnabled = true; // Default to 3D mode
+    private boolean mIs3DModeEnabled = false; // Always use 2D mode
 
     // Callback interface for display events
     public interface DisplayEventListener {
@@ -153,12 +153,17 @@ public class DisplayPresentationManager {
     }
 
     /**
-     * Update the display mode (2D or 3D)
+     * Update the display mode (always forces 2D mode)
      */
     public void setDisplayMode(boolean is3DMode) {
-        mIs3DModeEnabled = is3DMode;
+        // Always force 2D mode regardless of the parameter
+        if (is3DMode) {
+            Log.d(TAG, "3D mode requested but forcing 2D mode");
+        }
+        
+        mIs3DModeEnabled = false;
         if (mGlassesPresentation != null) {
-            mGlassesPresentation.setDisplayMode(is3DMode);
+            mGlassesPresentation.setDisplayMode(false);
         }
     }
 

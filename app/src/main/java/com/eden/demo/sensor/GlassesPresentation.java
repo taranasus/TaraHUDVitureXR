@@ -18,9 +18,12 @@ import android.widget.TextView;
 
 import androidx.core.content.res.ResourcesCompat;
 
+import com.google.android.gms.maps.MapView;
+
 import com.eden.demo.sensor.databinding.GlassesDisplayBinding;
 import com.eden.demo.sensor.hud.DisplayModeManager;
 import com.eden.demo.sensor.hud.HudElementsUpdater;
+import com.eden.demo.sensor.hud.MinimapManager;
 import com.eden.demo.sensor.hud.SegmentBarsManager;
 import com.eden.demo.sensor.hud.SignalStrengthMonitor;
 
@@ -55,11 +58,16 @@ public class GlassesPresentation extends Presentation implements
     private TextView mMonthDisplay2D;
     private LinearLayout mHudLayout2D;
     
+    // Map views for 2D and 3D modes
+    private MapView mMapView2D;
+    private MapView mMapView3D;
+    
     // HUD component managers
     private SignalStrengthMonitor mSignalMonitor;
     private SegmentBarsManager mSegmentBarsManager;
     private HudElementsUpdater mHudUpdater;
     private DisplayModeManager mDisplayModeManager;
+    private MinimapManager mMinimapManager;
     
     /**
      * Constructor
@@ -75,6 +83,7 @@ public class GlassesPresentation extends Presentation implements
         mSegmentBarsManager = new SegmentBarsManager(context);
         mHudUpdater = new HudElementsUpdater(context, this);
         mDisplayModeManager = new DisplayModeManager(this);
+        mMinimapManager = new MinimapManager(context);
     }
     
     @Override
@@ -113,8 +122,11 @@ public class GlassesPresentation extends Presentation implements
         // Initialize signal strength monitoring
         mSignalMonitor.initialize();
         
-        // Set initial display mode (3D by default)
-        mDisplayModeManager.setDisplayMode(true);
+        // Initialize minimap
+        initializeMinimap();
+        
+        // Set initial display mode (always 2D mode)
+        mDisplayModeManager.setDisplayMode(false);
         
         // Enable immersive mode for the presentation
         enablePresentationImmersiveMode();
@@ -144,6 +156,27 @@ public class GlassesPresentation extends Presentation implements
         mSegmentBar2D = mGlassesBinding.segmentBar2d;
         mDayDisplay2D = mGlassesBinding.dayDisplay2d;
         mMonthDisplay2D = mGlassesBinding.monthDisplay2d;
+        
+        // Minimap views
+        mMapView3D = mGlassesBinding.minimap3d;
+        mMapView2D = mGlassesBinding.minimap2d;
+    }
+    
+    /**
+     * Initialize the minimap
+     * This is called during onCreate and can be called again when location permission is granted
+     */
+    public void initializeMinimap() {
+        if (mMinimapManager != null && mMapView2D != null && mMapView3D != null) {
+            // Set map views
+            mMinimapManager.setMapViews(mMapView2D, mMapView3D);
+            
+            // Initialize with saved instance state (null for first creation)
+            mMinimapManager.onCreate(null);
+            
+            // Start location updates if the map is ready
+            mMinimapManager.startLocationUpdates();
+        }
     }
     
     /**
@@ -213,17 +246,32 @@ public class GlassesPresentation extends Presentation implements
             mDisplayModeManager.release();
         }
         
+        // Release minimap resources
+        if (mMinimapManager != null) {
+            mMinimapManager.onDestroy();
+        }
+        
         super.dismiss();
     }
     
     /**
-     * Set the display mode (2D or 3D)
+     * Set the display mode (always forces 2D mode)
      * 
-     * @param is3DMode True for 3D mode, false for 2D mode
+     * @param is3DMode Ignored - always sets to 2D mode
      */
     public void setDisplayMode(boolean is3DMode) {
+        // Always force 2D mode regardless of the parameter
+        if (is3DMode) {
+            Log.d(TAG, "3D mode requested but forcing 2D mode");
+        }
+        
         if (mDisplayModeManager != null) {
-            mDisplayModeManager.setDisplayMode(is3DMode);
+            mDisplayModeManager.setDisplayMode(false);
+        }
+        
+        // Update minimap display mode (always 2D)
+        if (mMinimapManager != null) {
+            mMinimapManager.setDisplayMode(false);
         }
     }
     
@@ -312,5 +360,50 @@ public class GlassesPresentation extends Presentation implements
         
         // Update all HUD elements
         mHudUpdater.updateAllElements();
+        
+        // Update minimap display mode
+        if (mMinimapManager != null) {
+            mMinimapManager.setDisplayMode(is3DMode);
+        }
+    }
+    
+    /**
+     * Handle lifecycle events for the presentation
+     */
+    
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mMinimapManager != null) {
+            mMinimapManager.onResume();
+        }
+    }
+    
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mMinimapManager != null) {
+            mMinimapManager.onPause();
+        }
+    }
+    
+    /**
+     * Handle low memory condition
+     * This is not an override since Presentation doesn't have this method
+     */
+    public void handleLowMemory() {
+        if (mMinimapManager != null) {
+            mMinimapManager.onLowMemory();
+        }
+    }
+    
+    /**
+     * Save instance state for the minimap
+     * This is not an override since the signature is different from Presentation
+     */
+    public void saveMinimapState(Bundle outState) {
+        if (mMinimapManager != null) {
+            mMinimapManager.onSaveInstanceState(outState);
+        }
     }
 }

@@ -43,7 +43,6 @@ public class FullscreenActivity extends AppCompatActivity {
     // UI Components
     private Button mBtnShowBox;
     private Button mBtnHideBox;
-    private Switch mSwitch3DMode;
     private TextView mStatusText;
 
     // Defines callbacks for service binding, passed to bindService()
@@ -86,7 +85,6 @@ public class FullscreenActivity extends AppCompatActivity {
         // Initialize UI components
         mBtnShowBox = binding.btnShowBox;
         mBtnHideBox = binding.btnHideBox;
-        mSwitch3DMode = binding.switch3dMode;
         mStatusText = binding.statusText;
         
         // Check and request READ_PHONE_STATE permission for signal strength
@@ -128,13 +126,7 @@ public class FullscreenActivity extends AppCompatActivity {
             }
         });
         
-        // Set up 3D mode toggle
-        mSwitch3DMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                toggleDisplayMode(isChecked);
-            }
-        });
+        // 3D mode toggle has been removed - always using 2D mode
     }
     
     /**
@@ -155,19 +147,9 @@ public class FullscreenActivity extends AppCompatActivity {
      */
     private void updateUIFromService() {
         if (mBound && mService != null) {
-            // Update 3D mode switch without triggering the listener
-            mSwitch3DMode.setOnCheckedChangeListener(null);
-            mSwitch3DMode.setChecked(mService.is3DModeEnabled());
-            mSwitch3DMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    toggleDisplayMode(isChecked);
-                }
-            });
-            
             // Update status text based on glasses connection
             if (mService.areGlassesConnected()) {
-                updateStatus("XR glasses connected");
+                updateStatus("XR glasses connected (2D mode)");
             } else {
                 updateStatus("No XR glasses detected");
             }
@@ -183,27 +165,6 @@ public class FullscreenActivity extends AppCompatActivity {
         }
     }
     
-    /**
-     * Toggle between 2D and 3D display modes
-     */
-    private void toggleDisplayMode(boolean enable3D) {
-        if (mBound && mService != null) {
-            boolean success = mService.toggleDisplayMode(enable3D);
-            if (success) {
-                updateStatus("Display mode set to: " + (enable3D ? "3D" : "2D"));
-            } else {
-                // Error occurred, revert switch state
-                mSwitch3DMode.setChecked(!enable3D);
-                updateStatus("Failed to change display mode");
-                Toast.makeText(this, "Failed to change display mode", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            // Service not bound, revert switch state
-            mSwitch3DMode.setChecked(!enable3D);
-            updateStatus("Service not bound, cannot change mode");
-            Toast.makeText(this, "Service not bound", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     @Override
     protected void onStart() {
@@ -276,7 +237,11 @@ public class FullscreenActivity extends AppCompatActivity {
                 
                 // Restart the service to apply the permissions
                 if (mBound && mService != null) {
+                    // Restart signal monitoring for phone state permission
                     mService.restartSignalMonitoring();
+                    
+                    // Initialize minimap for location permission
+                    mService.initializeMinimap();
                 }
             } else if (anyGranted) {
                 // Some permissions granted
@@ -285,7 +250,18 @@ public class FullscreenActivity extends AppCompatActivity {
                 
                 // Restart the service to apply the granted permissions
                 if (mBound && mService != null) {
-                    mService.restartSignalMonitoring();
+                    // Check which permissions were granted
+                    for (int i = 0; i < permissions.length; i++) {
+                        if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                            if (permissions[i].equals(Manifest.permission.READ_PHONE_STATE)) {
+                                // Restart signal monitoring for phone state permission
+                                mService.restartSignalMonitoring();
+                            } else if (permissions[i].equals(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                                // Initialize minimap for location permission
+                                mService.initializeMinimap();
+                            }
+                        }
+                    }
                 }
             } else {
                 // All permissions denied

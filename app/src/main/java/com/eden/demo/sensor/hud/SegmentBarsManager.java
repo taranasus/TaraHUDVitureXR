@@ -149,8 +149,7 @@ public class SegmentBarsManager {
             return;
         }
         
-        Log.d(TAG, "Updating signal bars in container with " + container.getChildCount() + 
-              " children, signal level: " + signalLevel);
+        // Removed verbose logging
         
         int visibleCount = 0;
         
@@ -168,8 +167,7 @@ public class SegmentBarsManager {
             }
         }
         
-        Log.d(TAG, "Signal bars updated: " + visibleCount + " segments visible out of " + 
-              (container.getChildCount() - 1));
+        // Removed verbose logging
     }
     
     /**

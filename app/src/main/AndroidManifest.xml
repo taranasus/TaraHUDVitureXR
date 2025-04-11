@@ -9,8 +9,10 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!-- Required permission for reading phone state (signal strength) -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- Required permission for accessing cell info (modern signal strength API) -->
+    <!-- Required permission for accessing cell info (modern signal strength API) and location -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- Required permission for internet access (Google Maps) -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -19,6 +21,11 @@
         android:supportsRtl="true"
         tools:replace="android:theme"
         android:theme="@style/Theme.SensorDemo">
+        
+        <!-- Google Maps API Key -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyATidbLXp3t-AiPhv_9q-MnOIP9qVjDzq8" />
         <activity
             android:name=".FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

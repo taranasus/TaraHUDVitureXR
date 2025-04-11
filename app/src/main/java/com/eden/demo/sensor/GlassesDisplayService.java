@@ -256,15 +256,20 @@ public class GlassesDisplayService extends Service implements
     //
     
     /**
-     * Toggle between 2D and 3D display modes
+     * Toggle display mode (always forces 2D mode)
      * 
-     * @param enable3D True to enable 3D mode, false for 2D mode
+     * @param enable3D Ignored - always sets to 2D mode
      * @return True if the operation was successful
      */
     public boolean toggleDisplayMode(boolean enable3D) {
-        boolean success = mVitureSDKManager.toggleDisplayMode(enable3D);
+        // Always force 2D mode regardless of the parameter
+        if (enable3D) {
+            Log.d(TAG, "3D mode requested but forcing 2D mode");
+        }
+        
+        boolean success = mVitureSDKManager.toggleDisplayMode(false);
         if (success) {
-            mDisplayManager.setDisplayMode(enable3D);
+            mDisplayManager.setDisplayMode(false);
         }
         return success;
     }
@@ -291,10 +296,10 @@ public class GlassesDisplayService extends Service implements
     /**
      * Get the current 3D mode state
      * 
-     * @return True if 3D mode is enabled
+     * @return Always false (2D mode)
      */
     public boolean is3DModeEnabled() {
-        return mVitureSDKManager.is3DModeEnabled();
+        return false; // Always return false (2D mode)
     }
     
     /**
@@ -315,6 +320,44 @@ public class GlassesDisplayService extends Service implements
             }
         } else {
             Log.e(TAG, "Cannot restart signal monitoring - glasses not connected");
+        }
+    }
+    
+    /**
+     * Initialize or refresh minimap after location permission is granted
+     * This is called from the activity when ACCESS_FINE_LOCATION permission is granted
+     */
+    public void initializeMinimap() {
+        Log.d(TAG, "Initializing minimap after location permission granted");
+        
+        if (mDisplayManager != null && mDisplayManager.areGlassesConnected()) {
+            // Get the current presentation and initialize minimap
+            GlassesPresentation presentation = mDisplayManager.getGlassesPresentation();
+            if (presentation != null) {
+                Log.d(TAG, "Initializing minimap in presentation");
+                presentation.initializeMinimap();
+            } else {
+                Log.e(TAG, "Cannot initialize minimap - presentation is null");
+            }
+        } else {
+            Log.e(TAG, "Cannot initialize minimap - glasses not connected");
+        }
+    }
+    
+    /**
+     * Handle low memory condition
+     * This is called when the system is low on memory
+     */
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        
+        if (mDisplayManager != null && mDisplayManager.areGlassesConnected()) {
+            // Get the current presentation and handle low memory
+            GlassesPresentation presentation = mDisplayManager.getGlassesPresentation();
+            if (presentation != null) {
+                presentation.handleLowMemory();
+            }
         }
     }
     

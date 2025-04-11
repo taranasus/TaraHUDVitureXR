@@ -5,13 +5,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 /**
- * Class responsible for managing display modes (2D/3D) in the HUD
+ * Class responsible for managing display mode in the HUD (2D mode only)
  */
 public class DisplayModeManager {
     private static final String TAG = "DisplayModeManager";
     
-    // Display mode
-    private boolean mCurrentlyIn3DMode = true;
+    // Display mode - always 2D mode
+    private boolean mCurrentlyIn3DMode = false;
     
     // UI layouts
     private LinearLayout mHudLayout3D;
@@ -45,30 +45,27 @@ public class DisplayModeManager {
     }
     
     /**
-     * Set the display mode (2D or 3D)
+     * Set the display mode (always forces 2D mode)
      * 
-     * @param is3DMode True for 3D mode, false for 2D mode
+     * @param is3DMode Ignored - always sets to 2D mode
      */
     public void setDisplayMode(boolean is3DMode) {
-        Log.d(TAG, "Setting display mode: " + (is3DMode ? "3D" : "2D"));
-        mCurrentlyIn3DMode = is3DMode;
-        
+        // Always force 2D mode regardless of the parameter
         if (is3DMode) {
-            // In 3D mode: 3840x1080, only show the right eye HUD
-            if (mHudLayout3D != null) {
-                mHudLayout3D.setVisibility(View.VISIBLE);
-            }
-            if (mHudLayout2D != null) {
-                mHudLayout2D.setVisibility(View.GONE);
-            }
+            Log.d(TAG, "3D mode requested but forcing 2D mode");
         } else {
-            // In 2D mode: 1920x1080, show the 2D HUD
-            if (mHudLayout3D != null) {
-                mHudLayout3D.setVisibility(View.GONE);
-            }
-            if (mHudLayout2D != null) {
-                mHudLayout2D.setVisibility(View.VISIBLE);
-            }
+            Log.d(TAG, "Setting display mode: 2D");
+        }
+        
+        // Always set to 2D mode
+        mCurrentlyIn3DMode = false;
+        
+        // Always show 2D mode HUD, hide 3D mode HUD
+        if (mHudLayout3D != null) {
+            mHudLayout3D.setVisibility(View.GONE);
+        }
+        if (mHudLayout2D != null) {
+            mHudLayout2D.setVisibility(View.VISIBLE);
         }
         
         // Notify listener of display mode change
@@ -85,40 +82,30 @@ public class DisplayModeManager {
     public void setHudVisibility(boolean visible) {
         Log.d(TAG, "Setting HUD visibility: " + (visible ? "visible" : "hidden"));
         
-        // Update visibility based on current mode
-        if (mCurrentlyIn3DMode) {
-            if (mHudLayout3D != null) {
-                mHudLayout3D.setVisibility(visible ? View.VISIBLE : View.GONE);
-            }
-        } else {
-            if (mHudLayout2D != null) {
-                mHudLayout2D.setVisibility(visible ? View.VISIBLE : View.GONE);
-            }
+        // Always update 2D mode visibility only
+        if (mHudLayout2D != null) {
+            mHudLayout2D.setVisibility(visible ? View.VISIBLE : View.GONE);
         }
     }
     
     /**
      * Check if the HUD is currently visible
      * 
-     * @return True if the HUD is visible in the current display mode
+     * @return True if the HUD is visible
      */
     public boolean isHudVisible() {
-        if (mCurrentlyIn3DMode) {
-            return mHudLayout3D != null && 
-                   mHudLayout3D.getVisibility() == View.VISIBLE;
-        } else {
-            return mHudLayout2D != null && 
-                   mHudLayout2D.getVisibility() == View.VISIBLE;
-        }
+        // Only check 2D mode visibility
+        return mHudLayout2D != null && 
+               mHudLayout2D.getVisibility() == View.VISIBLE;
     }
     
     /**
      * Get the current display mode
      * 
-     * @return True if in 3D mode, false if in 2D mode
+     * @return Always false (2D mode)
      */
     public boolean isIn3DMode() {
-        return mCurrentlyIn3DMode;
+        return false;
     }
     
     /**

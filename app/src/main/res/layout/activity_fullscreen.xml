@@ -36,27 +36,15 @@
         android:padding="16dp"
         android:text="Hide Green Box" />
     
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-        
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="3D Mode"
-            android:textSize="16sp"
-            android:textColor="@android:color/black" />
-            
-        <Switch
-            android:id="@+id/switch_3d_mode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true" />
-    </LinearLayout>
+        android:gravity="center"
+        android:text="2D Mode Only"
+        android:textSize="16sp"
+        android:textStyle="italic"
+        android:textColor="@android:color/black" />
     
     <TextView
         android:id="@+id/status_text"

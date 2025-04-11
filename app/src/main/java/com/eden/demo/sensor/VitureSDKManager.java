@@ -17,7 +17,7 @@ public class VitureSDKManager {
     private ArManager mArManager;
     private ArCallback mCallback;
     private int mSdkInitSuccess = -1;
-    private boolean mIs3DModeEnabled = true; // Default to 3D mode
+    private boolean mIs3DModeEnabled = false; // Always use 2D mode
     private boolean mIsKeepingAlive = false; // Track if we're in keep-alive mode
 
     // Callback interface for SDK events
@@ -65,9 +65,9 @@ public class VitureSDKManager {
                         mEventListener.onSDKInitializationComplete(success);
                     }
                     
-                    // Enable 3D mode once initialization is confirmed successful
+                    // Always ensure 2D mode is enabled once initialization is confirmed successful
                     if (mSdkInitSuccess == Constants.ERROR_INIT_SUCCESS) {
-                        enable3DMode();
+                        ensure2DMode();
                     }
                 } else if (msgId == Constants.EVENT_ID_3D) {
                     int state = byteArrayToInt(event, 0, event.length);
@@ -93,39 +93,44 @@ public class VitureSDKManager {
     }
 
     /**
-     * Enable 3D mode for the XR glasses
+     * Ensure 2D mode is enabled for the XR glasses
      */
-    private void enable3DMode() {
+    private void ensure2DMode() {
         if (mArManager == null) {
-            Log.e(TAG, "Cannot enable 3D mode: ArManager is null");
+            Log.e(TAG, "Cannot set 2D mode: ArManager is null");
             return;
         }
         
-        int result = mArManager.set3D(true);
+        int result = mArManager.set3D(false);
         if (result == Constants.ERR_SET_SUCCESS) {
-            mIs3DModeEnabled = true;
-            Log.d(TAG, "3D mode enabled successfully");
+            mIs3DModeEnabled = false;
+            Log.d(TAG, "2D mode enabled successfully");
             
             // Notify listener of state change
             if (mEventListener != null) {
-                mEventListener.on3DModeStateChanged(true);
+                mEventListener.on3DModeStateChanged(false);
             }
         } else {
-            Log.e(TAG, "Failed to enable 3D mode: " + result);
+            Log.e(TAG, "Failed to enable 2D mode: " + result);
         }
     }
 
     /**
-     * Toggle between 2D and 3D display modes
+     * Toggle display mode (always forces 2D mode)
      * 
-     * @param enable3D True to enable 3D mode, false for 2D mode
+     * @param enable3D Ignored - always sets to 2D mode
      * @return True if the operation was successful
      */
     public boolean toggleDisplayMode(boolean enable3D) {
         if (mArManager != null && mSdkInitSuccess == Constants.ERROR_INIT_SUCCESS) {
-            int result = mArManager.set3D(enable3D);
+            // Always force 2D mode regardless of the parameter
+            if (enable3D) {
+                Log.d(TAG, "3D mode requested but forcing 2D mode");
+            }
+            
+            int result = mArManager.set3D(false);
             if (result == Constants.ERR_SET_SUCCESS) {
-                mIs3DModeEnabled = enable3D;
+                mIs3DModeEnabled = false;
                 return true;
             }
         }
@@ -143,7 +148,7 @@ public class VitureSDKManager {
      * Get the current 3D mode state
      */
     public boolean is3DModeEnabled() {
-        return mIs3DModeEnabled;
+        return false; // Always return false (2D mode)
     }
 
     /**
@@ -159,25 +164,18 @@ public class VitureSDKManager {
         Log.d(TAG, "Activating keep-alive mode for glasses display");
         
         try {
-            // Refresh the current display mode to maintain active connection
-            int result = mArManager.set3D(mIs3DModeEnabled);
+            // Always refresh with 2D mode to maintain active connection
+            int result = mArManager.set3D(false);
             if (result == Constants.ERR_SET_SUCCESS) {
-                Log.d(TAG, "Display mode refreshed successfully");
+                Log.d(TAG, "Display mode refreshed successfully (2D mode)");
             } else {
                 Log.e(TAG, "Failed to refresh display mode: " + result);
             }
             
-            // Set 3D mode again to ensure the display stays active
+            // Toggle to 3D and back to 2D to force a refresh
             // This helps maintain the signal to the glasses
-            if (mIs3DModeEnabled) {
-                // If already in 3D mode, toggle to 2D and back to force a refresh
-                mArManager.set3D(false);
-                mArManager.set3D(true);
-            } else {
-                // If in 2D mode, toggle to 3D and back to force a refresh
-                mArManager.set3D(true);
-                mArManager.set3D(false);
-            }
+            mArManager.set3D(true);
+            mArManager.set3D(false);
             
             mIsKeepingAlive = true;
             Log.d(TAG, "Keep-alive mode activated for glasses");
@@ -197,8 +195,8 @@ public class VitureSDKManager {
         if (mIsKeepingAlive) {
             Log.d(TAG, "Resetting display after screen on");
             try {
-                // Refresh the 3D mode to ensure display is showing correctly
-                mArManager.set3D(mIs3DModeEnabled);
+                // Always refresh with 2D mode to ensure display is showing correctly
+                mArManager.set3D(false);
                 
                 mIsKeepingAlive = false;
                 Log.d(TAG, "Normal mode restored");
@@ -216,8 +214,8 @@ public class VitureSDKManager {
             // If we're in keep-alive mode, reset it before releasing
             if (mIsKeepingAlive) {
                 try {
-                    // Restore original display mode before releasing
-                    mArManager.set3D(mIs3DModeEnabled);
+                    // Always ensure 2D mode before releasing
+                    mArManager.set3D(false);
                     mIsKeepingAlive = false;
                 } catch (Exception e) {
                     Log.e(TAG, "Error resetting display mode during release", e);
