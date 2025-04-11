@@ -41,7 +41,7 @@ public class MinimapManager implements OnMapReadyCallback {
     
     // Default location (will be updated when actual location is available)
     private static final LatLng DEFAULT_LOCATION = new LatLng(37.7749, -122.4194); // San Francisco
-    private static final float DEFAULT_ZOOM = 18f; // Increased zoom level
+    private static final float DEFAULT_ZOOM = 17f; // Adjusted zoom level (was 18f)
     
     // Location update interval in milliseconds
     private static final long LOCATION_UPDATE_INTERVAL = 5000;
@@ -50,9 +50,8 @@ public class MinimapManager implements OnMapReadyCallback {
     // Context
     private final Context mContext;
     
-    // Map views for 2D and 3D modes
+    // Map view for 2D mode
     private MapView mMapView2D;
-    private MapView mMapView3D;
     
     // Google Map instance
     private GoogleMap mMap;
@@ -95,16 +94,14 @@ public class MinimapManager implements OnMapReadyCallback {
     }
     
     /**
-     * Set the map views for both 2D and 3D modes
+     * Set the map view for 2D mode
      * 
      * @param mapView2D MapView for 2D mode
-     * @param mapView3D MapView for 3D mode
      */
-    public void setMapViews(MapView mapView2D, MapView mapView3D) {
+    public void setMapViews(MapView mapView2D) {
         mMapView2D = mapView2D;
-        mMapView3D = mapView3D;
         
-        // Always initialize the 2D map view
+        // Initialize the 2D map view
         mMapView2D.getMapAsync(this);
     }
     
@@ -270,11 +267,10 @@ public class MinimapManager implements OnMapReadyCallback {
      * @param is3DMode Ignored - always uses 2D mode
      */
     public void setDisplayMode(boolean is3DMode) {
-        // Always use 2D mode map regardless of parameter
-        if (mMapView3D != null) mMapView3D.setVisibility(android.view.View.GONE);
+        // Ensure 2D map view is visible
         if (mMapView2D != null) mMapView2D.setVisibility(android.view.View.VISIBLE);
         
-        // If map is not ready, initialize it
+        // If map is not ready, initialize it (or re-initialize if needed)
         if (mIsMapReady && mMapView2D != null) {
             mMapView2D.getMapAsync(this);
         }
@@ -286,33 +282,27 @@ public class MinimapManager implements OnMapReadyCallback {
     
     public void onCreate(Bundle savedInstanceState) {
         if (mMapView2D != null) mMapView2D.onCreate(savedInstanceState);
-        if (mMapView3D != null) mMapView3D.onCreate(savedInstanceState);
     }
     
     public void onResume() {
         if (mMapView2D != null) mMapView2D.onResume();
-        if (mMapView3D != null) mMapView3D.onResume();
         startLocationUpdates();
     }
     
     public void onPause() {
         stopLocationUpdates();
         if (mMapView2D != null) mMapView2D.onPause();
-        if (mMapView3D != null) mMapView3D.onPause();
     }
     
     public void onDestroy() {
         if (mMapView2D != null) mMapView2D.onDestroy();
-        if (mMapView3D != null) mMapView3D.onDestroy();
     }
     
     public void onLowMemory() {
         if (mMapView2D != null) mMapView2D.onLowMemory();
-        if (mMapView3D != null) mMapView3D.onLowMemory();
     }
     
     public void onSaveInstanceState(Bundle outState) {
         if (mMapView2D != null) mMapView2D.onSaveInstanceState(outState);
-        if (mMapView3D != null) mMapView3D.onSaveInstanceState(outState);
     }
 }

@@ -21,24 +21,15 @@
         android:layout_marginTop="20dp"
         android:visibility="visible"/>
 
-    <!-- Minimap for 3D mode (top-right corner) -->
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/minimap_3d"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="top|end"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:visibility="visible" />
-
-    <!-- Minimap for 2D mode (top-right corner) -->
+    <!-- Minimap (top-right corner) -->
     <com.google.android.gms.maps.MapView
         android:id="@+id/minimap_2d"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="250dp" 
+        android:layout_height="250dp"
         android:layout_gravity="top|end"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:visibility="gone" />
+        android:background="@drawable/minimap_border"
+        android:visibility="visible" />
 
 </FrameLayout>
