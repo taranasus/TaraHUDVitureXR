@@ -44,9 +44,8 @@ public class GlassesPresentation extends Presentation implements
     private HealthStats mHealthStats2D;
     private LinearLayout mHudLayout2D;
     
-    // Map views for 2D and 3D modes
+    // Map view for 2D mode
     private MapView mMapView2D;
-    private MapView mMapView3D;
     
     // HUD component managers
     private SignalStrengthMonitor mSignalMonitor;
@@ -118,8 +117,7 @@ public class GlassesPresentation extends Presentation implements
         // 2D mode UI elements (now the only mode)
         mHealthStats2D = mGlassesBinding.healthStats2d;
         
-        // Minimap views
-        mMapView3D = mGlassesBinding.minimap3d;
+        // Minimap view
         mMapView2D = mGlassesBinding.minimap2d;
     }
     
@@ -128,9 +126,9 @@ public class GlassesPresentation extends Presentation implements
      * This is called during onCreate and can be called again when location permission is granted
      */
     public void initializeMinimap() {
-        if (mMinimapManager != null && mMapView2D != null && mMapView3D != null) {
-            // Set map views
-            mMinimapManager.setMapViews(mMapView2D, mMapView3D);
+        if (mMinimapManager != null && mMapView2D != null) {
+            // Set map view
+            mMinimapManager.setMapViews(mMapView2D);
             
             // Initialize with saved instance state (null for first creation)
             mMinimapManager.onCreate(null);
