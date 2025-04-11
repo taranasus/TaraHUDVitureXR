@@ -21,15 +21,23 @@
         android:layout_marginTop="20dp"
         android:visibility="visible"/>
 
-    <!-- Minimap (top-right corner) -->
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/minimap_2d"
-        android:layout_width="250dp" 
+    <!-- Minimap Wrapper (top-right corner) with border -->
+    <FrameLayout
+        android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_gravity="top|end"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/minimap_border"
-        android:visibility="visible" />
+        android:padding="2dp"> <!-- Padding equal to border stroke width -->
+
+        <!-- Minimap -->
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/minimap_2d"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+            
+    </FrameLayout>
 
 </FrameLayout>
