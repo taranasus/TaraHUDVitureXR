@@ -9,6 +9,8 @@ import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.eden.demo.sensor.HealthStats;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -173,36 +175,32 @@ public class HudElementsUpdater {
      * Update the date display
      */
     private void updateDateDisplay() {
-        
+        Calendar calendar = Calendar.getInstance();
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        String monthAbbr = mMonthFormat.format(calendar.getTime());
+
+        // Format as day of month (e.g., 04)
+        String dayDisplay = String.format(Locale.getDefault(), "%02d", dayOfMonth);
+
+        // Convert month abbreviation to uppercase
+        monthAbbr = monthAbbr.toUpperCase(Locale.getDefault());
+        String monthDisplay = monthAbbr;
+
+        // Update 3D mode displays
+        if (mDayDisplay3D != null) {
+            mDayDisplay3D.setText(dayDisplay);
+        }
+
+        if (mMonthDisplay3D != null) {
+            mMonthDisplay3D.setText(monthDisplay);
+        }
+
         // Update 2D mode displays
         if (mHealthStats2D != null) {
             mHealthStats2D.updateDate(dayDisplay, monthDisplay);
         }
     }
-    
-        // Convert month abbreviation to uppercase
-        monthAbbr = monthAbbr.toUpperCase(Locale.getDefault());
-        String monthDisplay = monthAbbr;
-        
-        // Update 3D mode displays
-        if (mDayDisplay3D != null) {
-            mDayDisplay3D.setText(dayDisplay);
-        }
-        
-        if (mMonthDisplay3D != null) {
-            mMonthDisplay3D.setText(monthDisplay);
-        }
-        
-        // Update 2D mode displays
-        if (mDayDisplay2D != null) {
-            mDayDisplay2D.setText(dayDisplay);
-        }
-        
-        if (mMonthDisplay2D != null) {
-            mMonthDisplay2D.setText(monthDisplay);
-        }
-    }
-    
+
     /**
      * Get the current battery percentage
      * 

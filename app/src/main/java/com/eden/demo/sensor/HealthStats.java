@@ -44,4 +44,3 @@ public class HealthStats extends LinearLayout {
         binding.monthDisplay2d.setText(month);
     }
 }
-</layout>

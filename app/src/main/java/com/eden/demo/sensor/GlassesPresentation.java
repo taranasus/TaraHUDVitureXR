@@ -103,18 +103,12 @@ public class GlassesPresentation extends Presentation implements
         
         // Create bar segments
         mSegmentBarsManager.createSignalBars(mSignalLayout3D);
-        mSegmentBarsManager.createSignalBars(mSignalLayout2D);
-        mSegmentBarsManager.createSegmentBars(mSegmentBar3D);
-        mSegmentBarsManager.createSegmentBars(mSegmentBar2D);
         
- // Set UI elements for HUD updater
- mHudUpdater.set3DModeElements(mTimeDisplay3D, mBatteryBar3D, mDayDisplay3D, mMonthDisplay3D);
+        // Set UI elements for HUD updater
+        mHudUpdater.set3DModeElements(mTimeDisplay3D, mBatteryBar3D, mDayDisplay3D, mMonthDisplay3D);
  mHudUpdater.set2DModeElements(mHealthStats2D);
         
- // Set layouts for display mode manager
- mDisplayModeManager.setLayouts(mHudLayout3D, mHudLayout2D);
-        
-        // Initialize signal strength monitoring
+ // Initialize signal strength monitoring
         mSignalMonitor.initialize();
         
         // Initialize minimap
@@ -144,7 +138,7 @@ public class GlassesPresentation extends Presentation implements
         mMonthDisplay3D = mGlassesBinding.monthDisplayRight;
         
         // 2D mode UI elements
-        mHudLayout2D = mGlassesBinding.hudLayout2d;
+        
         mHealthStats2D = mGlassesBinding.healthStats2d;
         
         // Minimap views
@@ -181,9 +175,6 @@ public class GlassesPresentation extends Presentation implements
             mMonthDisplay3D.setTypeface(rajdhaniTypeface);
             
             // 2D mode text views
-            mTimeDisplay2D.setTypeface(rajdhaniTypeface);
-            mDayDisplay2D.setTypeface(rajdhaniTypeface);
-            mMonthDisplay2D.setTypeface(rajdhaniTypeface);
         }
     }
     
@@ -311,7 +302,7 @@ public class GlassesPresentation extends Presentation implements
         
         // Update signal bars
         mSegmentBarsManager.updateSignalBars(mSignalLayout3D, signalStrength);
-        mSegmentBarsManager.updateSignalBars(mSignalLayout2D, signalStrength);
+        mHealthStats2D.updateSignalStrength(signalStrength);
     }
     
     /**
@@ -326,7 +317,6 @@ public class GlassesPresentation extends Presentation implements
             
             // Update signal bars
             mSegmentBarsManager.updateSignalBars(mSignalLayout3D, signalStrength);
-            mSegmentBarsManager.updateSignalBars(mSignalLayout2D, signalStrength);
         }
     }
     
@@ -345,7 +335,6 @@ public class GlassesPresentation extends Presentation implements
             
             // Update signal bars directly
             mSegmentBarsManager.updateSignalBars(mSignalLayout3D, signalStrength);
-            mSegmentBarsManager.updateSignalBars(mSignalLayout2D, signalStrength);
         }
         
         // Update all HUD elements
