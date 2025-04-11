@@ -50,12 +50,7 @@ public class GlassesPresentation extends Presentation implements
     private LinearLayout mHudLayout3D;
     
     // UI elements for 2D mode
-    private TextView mTimeDisplay2D;
-    private ProgressBar mBatteryBar2D;
-    private LinearLayout mSignalLayout2D;
-    private LinearLayout mSegmentBar2D;
-    private TextView mDayDisplay2D;
-    private TextView mMonthDisplay2D;
+    private HealthStats mHealthStats2D;
     private LinearLayout mHudLayout2D;
     
     // Map views for 2D and 3D modes
@@ -112,12 +107,12 @@ public class GlassesPresentation extends Presentation implements
         mSegmentBarsManager.createSegmentBars(mSegmentBar3D);
         mSegmentBarsManager.createSegmentBars(mSegmentBar2D);
         
-        // Set UI elements for HUD updater
-        mHudUpdater.set3DModeElements(mTimeDisplay3D, mBatteryBar3D, mDayDisplay3D, mMonthDisplay3D);
-        mHudUpdater.set2DModeElements(mTimeDisplay2D, mBatteryBar2D, mDayDisplay2D, mMonthDisplay2D);
+ // Set UI elements for HUD updater
+ mHudUpdater.set3DModeElements(mTimeDisplay3D, mBatteryBar3D, mDayDisplay3D, mMonthDisplay3D);
+ mHudUpdater.set2DModeElements(mHealthStats2D);
         
-        // Set layouts for display mode manager
-        mDisplayModeManager.setLayouts(mHudLayout3D, mHudLayout2D);
+ // Set layouts for display mode manager
+ mDisplayModeManager.setLayouts(mHudLayout3D, mHudLayout2D);
         
         // Initialize signal strength monitoring
         mSignalMonitor.initialize();
@@ -150,12 +145,7 @@ public class GlassesPresentation extends Presentation implements
         
         // 2D mode UI elements
         mHudLayout2D = mGlassesBinding.hudLayout2d;
-        mTimeDisplay2D = mGlassesBinding.timeDisplay2d;
-        mBatteryBar2D = mGlassesBinding.batteryBar2d;
-        mSignalLayout2D = mGlassesBinding.signalLayout2d;
-        mSegmentBar2D = mGlassesBinding.segmentBar2d;
-        mDayDisplay2D = mGlassesBinding.dayDisplay2d;
-        mMonthDisplay2D = mGlassesBinding.monthDisplay2d;
+        mHealthStats2D = mGlassesBinding.healthStats2d;
         
         // Minimap views
         mMapView3D = mGlassesBinding.minimap3d;

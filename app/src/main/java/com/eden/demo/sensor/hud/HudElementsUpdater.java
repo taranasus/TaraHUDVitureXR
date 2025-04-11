@@ -84,20 +84,15 @@ public class HudElementsUpdater {
         mMonthDisplay3D = monthDisplay;
     }
     
+    private HealthStats mHealthStats2D;
+    
     /**
      * Set the UI elements for 2D mode
      * 
-     * @param timeDisplay Time display TextView
-     * @param batteryBar Battery progress bar
-     * @param dayDisplay Day display TextView
-     * @param monthDisplay Month display TextView
+     * @param healthStats HealthStats view containing all 2D mode UI elements
      */
-    public void set2DModeElements(TextView timeDisplay, ProgressBar batteryBar, 
-                                 TextView dayDisplay, TextView monthDisplay) {
-        mTimeDisplay2D = timeDisplay;
-        mBatteryBar2D = batteryBar;
-        mDayDisplay2D = dayDisplay;
-        mMonthDisplay2D = monthDisplay;
+    public void set2DModeElements(HealthStats healthStats) {
+        mHealthStats2D = healthStats;
     }
     
     /**
@@ -158,8 +153,8 @@ public class HudElementsUpdater {
             mTimeDisplay3D.setText(currentTime);
         }
         
-        if (mTimeDisplay2D != null) {
-            mTimeDisplay2D.setText(currentTime);
+        if (mHealthStats2D != null) {
+            mHealthStats2D.updateTime(currentTime);
         }
     }
     
@@ -169,12 +164,8 @@ public class HudElementsUpdater {
     private void updateBatteryDisplay() {
         int batteryPct = getBatteryPercentage();
         
-        if (mBatteryBar3D != null) {
-            mBatteryBar3D.setProgress(batteryPct);
-        }
-        
-        if (mBatteryBar2D != null) {
-            mBatteryBar2D.setProgress(batteryPct);
+        if (mHealthStats2D != null) {
+            mHealthStats2D.updateBatteryLevel(batteryPct);
         }
     }
     
@@ -182,13 +173,13 @@ public class HudElementsUpdater {
      * Update the date display
      */
     private void updateDateDisplay() {
-        Calendar calendar = Calendar.getInstance();
-        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        String monthAbbr = mMonthFormat.format(calendar.getTime());
         
-        // Format as day of month (e.g., 04)
-        String dayDisplay = String.format(Locale.getDefault(), "%02d", dayOfMonth);
-        
+        // Update 2D mode displays
+        if (mHealthStats2D != null) {
+            mHealthStats2D.updateDate(dayDisplay, monthDisplay);
+        }
+    }
+    
         // Convert month abbreviation to uppercase
         monthAbbr = monthAbbr.toUpperCase(Locale.getDefault());
         String monthDisplay = monthAbbr;

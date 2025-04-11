@@ -110,100 +110,14 @@
         For 2D mode (1920x1080): Same layout for both eyes
         Positioned in the top-left corner of the 2D display
      -->
-    <LinearLayout
-        android:id="@+id/hud_layout_2d"
+    <com.eden.demo.sensor.HealthStats
+        android:id="@+id/health_stats_2d"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|start"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <!-- Left section with time display -->
-        <TextView
-            android:id="@+id/time_display_2d"
-            android:layout_width="55dp"
-            android:layout_height="40dp"
-            android:background="@drawable/cyan_box_background"
-            android:gravity="center"
-            android:text="00:00"
-            android:textColor="#00DDDD"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:text="13:40" />
-
-        <!-- Right section with health and signal bars -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:orientation="vertical">
-
-            <!-- Signal strength bar - using horizontal LinearLayout with segments -->
-            <LinearLayout
-                android:id="@+id/signal_layout_2d"
-                android:layout_width="200dp"
-                android:layout_height="5dp"
-                android:layout_marginTop="0dp"
-                android:orientation="horizontal"
-                android:background="@drawable/signal_bar_background_updated">
-
-                <!-- Signal segments will be added programmatically -->
-            </LinearLayout>
-
-            <!-- Battery health bar -->
-            <ProgressBar
-                android:id="@+id/battery_bar_2d"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="300dp"
-                android:layout_height="18dp"
-                android:layout_marginTop="3dp"
-                android:progress="75"
-                android:progressDrawable="@drawable/health_bar_progress" />
-                
-            <!-- Segment bar (new) -->
-            <LinearLayout
-                android:id="@+id/segment_bar_2d"
-                android:layout_width="200dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginStart="-4dp"
-                android:orientation="horizontal"
-                android:background="@drawable/segment_bar_background">
-
-                <!-- Segment bar items will be added programmatically -->
-            </LinearLayout>
-        </LinearLayout>
-        
-        <!-- Day and month display -->
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/day_display_2d"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#FF6040"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:text="04" />
-
-            <TextView
-                android:id="@+id/month_display_2d"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="-2dp"
-                android:textColor="#FF6040"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:text="APR" />
-        </FrameLayout>
-    </LinearLayout>
+        android:visibility="gone"/>
 
     <!-- Minimap for 3D mode (top-right corner) -->
     <com.google.android.gms.maps.MapView
