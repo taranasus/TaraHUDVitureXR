@@ -39,17 +39,8 @@ public class GlassesPresentation extends Presentation implements
     
     // Layout bindings
     private GlassesDisplayBinding mGlassesBinding;
-    
-    // UI elements for 3D mode
-    private TextView mTimeDisplay3D;
-    private ProgressBar mBatteryBar3D;
-    private LinearLayout mSignalLayout3D;
-    private LinearLayout mSegmentBar3D;
-    private TextView mDayDisplay3D;
-    private TextView mMonthDisplay3D;
-    private LinearLayout mHudLayout3D;
-    
-    // UI elements for 2D mode
+
+    // UI elements for 2D mode (now the only mode)
     private HealthStats mHealthStats2D;
     private LinearLayout mHudLayout2D;
     
@@ -100,15 +91,11 @@ public class GlassesPresentation extends Presentation implements
         
         // Apply the custom Rajdhani font to all text views
         applyCustomFont();
-        
-        // Create bar segments
-        mSegmentBarsManager.createSignalBars(mSignalLayout3D);
-        
-        // Set UI elements for HUD updater
-        mHudUpdater.set3DModeElements(mTimeDisplay3D, mBatteryBar3D, mDayDisplay3D, mMonthDisplay3D);
- mHudUpdater.set2DModeElements(mHealthStats2D);
-        
- // Initialize signal strength monitoring
+
+        // Set UI elements for HUD updater (only 2D now)
+        mHudUpdater.set2DModeElements(mHealthStats2D);
+
+        // Initialize signal strength monitoring
         mSignalMonitor.initialize();
         
         // Initialize minimap
@@ -128,17 +115,7 @@ public class GlassesPresentation extends Presentation implements
      * Initialize UI references from the layout binding
      */
     private void initializeUIReferences() {
-        // 3D mode UI elements
-        mHudLayout3D = mGlassesBinding.hudLayoutRightEye;
-        mTimeDisplay3D = mGlassesBinding.timeDisplayRight;
-        mBatteryBar3D = mGlassesBinding.batteryBarRight;
-        mSignalLayout3D = mGlassesBinding.signalLayoutRight;
-        mSegmentBar3D = mGlassesBinding.segmentBarRight;
-        mDayDisplay3D = mGlassesBinding.dayDisplayRight;
-        mMonthDisplay3D = mGlassesBinding.monthDisplayRight;
-        
-        // 2D mode UI elements
-        
+        // 2D mode UI elements (now the only mode)
         mHealthStats2D = mGlassesBinding.healthStats2d;
         
         // Minimap views
@@ -167,15 +144,7 @@ public class GlassesPresentation extends Presentation implements
      * Apply the custom Rajdhani font to all text views
      */
     private void applyCustomFont() {
-        Typeface rajdhaniTypeface = ResourcesCompat.getFont(getContext(), R.font.rajdhani_medium);
-        if (rajdhaniTypeface != null) {
-            // 3D mode text views
-            mTimeDisplay3D.setTypeface(rajdhaniTypeface);
-            mDayDisplay3D.setTypeface(rajdhaniTypeface);
-            mMonthDisplay3D.setTypeface(rajdhaniTypeface);
-            
-            // 2D mode text views
-        }
+        // Font is applied within HealthStats component now
     }
     
     /**
@@ -299,9 +268,8 @@ public class GlassesPresentation extends Presentation implements
     @Override
     public void onSignalStrengthChanged(int signalStrength, int maxBars) {
         Log.d(TAG, "Signal strength changed: " + signalStrength + " out of " + maxBars);
-        
-        // Update signal bars
-        mSegmentBarsManager.updateSignalBars(mSignalLayout3D, signalStrength);
+
+        // Update signal bars (only 2D now)
         mHealthStats2D.updateSignalStrength(signalStrength);
     }
     
@@ -313,10 +281,7 @@ public class GlassesPresentation extends Presentation implements
     public void onUpdateSignalDisplay() {
         // Get current signal strength from monitor
         if (mSignalMonitor != null) {
-            int signalStrength = mSignalMonitor.getSignalStrength();
-            
-            // Update signal bars
-            mSegmentBarsManager.updateSignalBars(mSignalLayout3D, signalStrength);
+            // Signal strength is updated via HealthStats now
         }
     }
     
@@ -330,13 +295,9 @@ public class GlassesPresentation extends Presentation implements
         
         // Force signal strength update
         if (mSignalMonitor != null) {
-            int signalStrength = mSignalMonitor.getSignalStrength();
-            Log.d(TAG, "Forcing signal strength update: " + signalStrength);
-            
-            // Update signal bars directly
-            mSegmentBarsManager.updateSignalBars(mSignalLayout3D, signalStrength);
+            // Signal strength is updated via HealthStats now
         }
-        
+
         // Update all HUD elements
         mHudUpdater.updateAllElements();
         

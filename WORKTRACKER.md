@@ -12,12 +12,13 @@
 8. You are done
 
 ## Next Dev Task:
-- Add to the healthStats two red Icons to the left of the clock, one should show the WiFi status, the other should be just a placeholder for now
 
 ## Next Testing Task:
+- The health component has three bars that display data. Top one displays phone signal, middle displays phone battery, lower one doesn't display anything, it used to just be set to a constant hardcoded valu so I can see it's there. However the bottom bar isn't visible in testing anymore. I assume this is because for some reason the hardcoded valu is 0. This needs to be investigated and set the value to something else if it's just a matter of it being set to 0. If that's not the issue then there's a bug somehwere and needs to be fixed. (Fix: Removed duplicate layout in glasses_display.xml and made HealthStats component visible).
 
 
 ## Feature Ideas:
+- Add to the healthStats two red Icons to the left of the clock, one should show the WiFi status, the other should be just a placeholder for now
 - Main UI interface that's always up HUD for regular outside usage.
 - Various different UIs for specialized needs with a main home interface (Just like the menu system in a game)
 - Make interface look like Cyberpunk 2077 interface

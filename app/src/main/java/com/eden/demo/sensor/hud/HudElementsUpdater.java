@@ -33,14 +33,10 @@ public class HudElementsUpdater {
     private SimpleDateFormat mTimeFormat;
     private SimpleDateFormat mMonthFormat;
     
-    // UI elements for 3D mode
-    private TextView mTimeDisplay3D;
-    private ProgressBar mBatteryBar3D;
-    private TextView mDayDisplay3D;
-    private TextView mMonthDisplay3D;
+    // UI elements for 2D mode (now the only mode)
+    private HealthStats mHealthStats2D;
     
-    // UI elements for 2D mode
-    private TextView mTimeDisplay2D;
+    // Callback interface for signal strength updates
     private ProgressBar mBatteryBar2D;
     private TextView mDayDisplay2D;
     private TextView mMonthDisplay2D;
@@ -51,7 +47,7 @@ public class HudElementsUpdater {
     }
     
     private SignalStrengthUpdateListener mSignalListener;
-    
+
     /**
      * Constructor
      * 
@@ -69,25 +65,7 @@ public class HudElementsUpdater {
         // Initialize handler for updates
         mUpdateHandler = new Handler();
     }
-    
-    /**
-     * Set the UI elements for 3D mode
-     * 
-     * @param timeDisplay Time display TextView
-     * @param batteryBar Battery progress bar
-     * @param dayDisplay Day display TextView
-     * @param monthDisplay Month display TextView
-     */
-    public void set3DModeElements(TextView timeDisplay, ProgressBar batteryBar, 
-                                 TextView dayDisplay, TextView monthDisplay) {
-        mTimeDisplay3D = timeDisplay;
-        mBatteryBar3D = batteryBar;
-        mDayDisplay3D = dayDisplay;
-        mMonthDisplay3D = monthDisplay;
-    }
-    
-    private HealthStats mHealthStats2D;
-    
+
     /**
      * Set the UI elements for 2D mode
      * 
@@ -150,11 +128,7 @@ public class HudElementsUpdater {
      */
     private void updateTimeDisplay() {
         String currentTime = mTimeFormat.format(new Date());
-        
-        if (mTimeDisplay3D != null) {
-            mTimeDisplay3D.setText(currentTime);
-        }
-        
+
         if (mHealthStats2D != null) {
             mHealthStats2D.updateTime(currentTime);
         }
@@ -186,16 +160,7 @@ public class HudElementsUpdater {
         monthAbbr = monthAbbr.toUpperCase(Locale.getDefault());
         String monthDisplay = monthAbbr;
 
-        // Update 3D mode displays
-        if (mDayDisplay3D != null) {
-            mDayDisplay3D.setText(dayDisplay);
-        }
-
-        if (mMonthDisplay3D != null) {
-            mMonthDisplay3D.setText(monthDisplay);
-        }
-
-        // Update 2D mode displays
+        // Update 2D mode displays (now the only mode)
         if (mHealthStats2D != null) {
             mHealthStats2D.updateDate(dayDisplay, monthDisplay);
         }
