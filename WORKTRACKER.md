@@ -15,7 +15,10 @@
 - Add to the healthStats two red Icons to the left of the clock, one should show the WiFi status, the other should be just a placeholder for now
 
 ## Next Testing Task:
-- Move all the code for the top-left UI elements to a different file (called healthStats) or set of files and have that impored as a separate component in the main glassess_display activity. 
+- Move all the code for the top-left UI elements to a different file (called healthStats) or set of files and have that imported as a separate component in the main glasses_display activity.
+
+## Completed
+- Move all the code for the top-left UI elements to a different file (called healthStats) or set of files and have that imported as a separate component in the main glasses_display activity.
 
 ## Feature Ideas:
 - Main UI interface that's always up HUD for regular outside usage.

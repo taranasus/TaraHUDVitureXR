@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.util.AttributeSet;
 
 import com.eden.demo.sensor.databinding.HealthStatsBinding;
 import com.eden.demo.sensor.hud.SegmentBarsManager;
@@ -13,10 +14,19 @@ public class HealthStats extends LinearLayout {
     private HealthStatsBinding binding;
     private SegmentBarsManager segmentBarsManager;
 
-    public HealthStats(Context context) {
-        super(context);
-        init(context);
-    }
+ public HealthStats(Context context) {
+ this(context, null);
+ }
+
+ public HealthStats(Context context, AttributeSet attrs) {
+ super(context, attrs);
+ init(context);
+ }
+
+ public HealthStats(Context context, AttributeSet attrs, int defStyleAttr) {
+ super(context, attrs, defStyleAttr);
+ init(context);
+ }
 
     private void init(Context context) {
         binding = HealthStatsBinding.inflate(LayoutInflater.from(context), this, true);
