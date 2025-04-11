@@ -14,7 +14,8 @@
 ## Next Dev Task:
 
 ## Next Testing Task:
-- The health component has three bars that display data. Top one displays phone signal, middle displays phone battery, lower one doesn't display anything, it used to just be set to a constant hardcoded valu so I can see it's there. However the bottom bar isn't visible in testing anymore. I assume this is because for some reason the hardcoded valu is 0. This needs to be investigated and set the value to something else if it's just a matter of it being set to 0. If that's not the issue then there's a bug somehwere and needs to be fixed. (Fix: Removed duplicate layout in glasses_display.xml and made HealthStats component visible).
+- Adjust the minimap so it's more thematically accurate with the cyberpunk 2077 minimap. Also make it a little more zoomed in I think.
+
 
 
 ## Feature Ideas:
@@ -58,6 +59,7 @@ You need to follow the implementation plan written down here minimap_implementat
 - I no longer want to support both the 2D and 3D modes inside of the HUD. It's too much duplication of work. The toggle between 2d and 3d modes must be removed. It should always be forced to display in 2D mode. If 3D mode is detected it should be switched back to 2D mode. All 3D mode related code should be deleted from the project. Only 2D mode should be supported.
 - Fixed app startup crashes by implementing a solution to disable Android Studio startup agents that were causing issues on certain devices. Added TaraHUDApplication class and StartupAgentHelper to prevent crashes related to fs-verity errors and code_cache/startup_agents issues.
 - Move all the code for the top-left UI elements to a different file (called healthStats) or set of files and have that imported as a separate component in the main glasses_display activity.
+- The health component has three bars that display data. Top one displays phone signal, middle displays phone battery, lower one doesn't display anything, it used to just be set to a constant hardcoded valu so I can see it's there. However the bottom bar isn't visible in testing anymore. I assume this is because for some reason the hardcoded valu is 0. This needs to be investigated and set the value to something else if it's just a matter of it being set to 0. If that's not the issue then there's a bug somehwere and needs to be fixed. (Fix: Removed duplicate layout in glasses_display.xml and made HealthStats component visible).
 
 
 ## ON HOLD

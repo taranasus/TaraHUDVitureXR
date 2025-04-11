@@ -41,7 +41,7 @@ public class MinimapManager implements OnMapReadyCallback {
     
     // Default location (will be updated when actual location is available)
     private static final LatLng DEFAULT_LOCATION = new LatLng(37.7749, -122.4194); // San Francisco
-    private static final float DEFAULT_ZOOM = 15f;
+    private static final float DEFAULT_ZOOM = 18f; // Increased zoom level
     
     // Location update interval in milliseconds
     private static final long LOCATION_UPDATE_INTERVAL = 5000;
@@ -138,7 +138,7 @@ public class MinimapManager implements OnMapReadyCallback {
         try {
             // Apply custom map style
             boolean success = mMap.setMapStyle(
-                    MapStyleOptions.loadRawResourceStyle(mContext, R.raw.map_style_dark));
+                    MapStyleOptions.loadRawResourceStyle(mContext, R.raw.map_style_cyberpunk)); // Use new cyberpunk style
             
             if (!success) {
                 Log.e(TAG, "Style parsing failed");
