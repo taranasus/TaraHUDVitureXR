@@ -291,4 +291,15 @@ public class FullscreenActivity extends AppCompatActivity {
             mBound = false;
         }
     }
+    
+    // Static initialization block to ensure startup agents are disabled
+    // This is a backup in case the Application class initialization fails
+    // See StartupAgentHelper.java for detailed explanation of the startup agent issues
+    static {
+        try {
+            StartupAgentHelper.disableStartupAgents();
+        } catch (Exception e) {
+            // Can't log here yet
+        }
+    }
 }

@@ -15,7 +15,6 @@
 
 
 ## Next Testing Task:
-- I no longer want to support both the 2D and 3D modes inside of the HUD. It's too much duplication of work. The toggle between 2d and 3d modes must be removed. It should always be forced to display in 2D mode. If 3D mode is detected it should be switched back to 2D mode. All 3D mode related code should be deleted from the project. Only 2D mode should be supported.
 
 
 ## Feature Ideas:
@@ -57,6 +56,9 @@
 For now it doesn't need to be styalized like in the game, just implement whatever gets us faster to the goal of showing a minimap on the HUD with the user's location at its centre.
 
 You need to follow the implementation plan written down here minimap_implementation_plan.md in order to do this implementation succesfully. 
+- I no longer want to support both the 2D and 3D modes inside of the HUD. It's too much duplication of work. The toggle between 2d and 3d modes must be removed. It should always be forced to display in 2D mode. If 3D mode is detected it should be switched back to 2D mode. All 3D mode related code should be deleted from the project. Only 2D mode should be supported.
+- Fixed app startup crashes by implementing a solution to disable Android Studio startup agents that were causing issues on certain devices. Added TaraHUDApplication class and StartupAgentHelper to prevent crashes related to fs-verity errors and code_cache/startup_agents issues.
+
 
 ## ON HOLD
 - Not possible in current version of SDK (1.0.7) but dev team said they're working on it so might be in the next version when it drops. On hold for now.- Make it automatically switch the glasses to be transparent (not opaque) when the app starts.
