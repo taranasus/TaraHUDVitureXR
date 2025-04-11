@@ -15,10 +15,7 @@
 - Add to the healthStats two red Icons to the left of the clock, one should show the WiFi status, the other should be just a placeholder for now
 
 ## Next Testing Task:
-- Move all the code for the top-left UI elements to a different file (called healthStats) or set of files and have that imported as a separate component in the main glasses_display activity.
 
-## Completed
-- Move all the code for the top-left UI elements to a different file (called healthStats) or set of files and have that imported as a separate component in the main glasses_display activity.
 
 ## Feature Ideas:
 - Main UI interface that's always up HUD for regular outside usage.
@@ -59,6 +56,7 @@ For now it doesn't need to be styalized like in the game, just implement whateve
 You need to follow the implementation plan written down here minimap_implementation_plan.md in order to do this implementation succesfully. 
 - I no longer want to support both the 2D and 3D modes inside of the HUD. It's too much duplication of work. The toggle between 2d and 3d modes must be removed. It should always be forced to display in 2D mode. If 3D mode is detected it should be switched back to 2D mode. All 3D mode related code should be deleted from the project. Only 2D mode should be supported.
 - Fixed app startup crashes by implementing a solution to disable Android Studio startup agents that were causing issues on certain devices. Added TaraHUDApplication class and StartupAgentHelper to prevent crashes related to fs-verity errors and code_cache/startup_agents issues.
+- Move all the code for the top-left UI elements to a different file (called healthStats) or set of files and have that imported as a separate component in the main glasses_display activity.
 
 
 ## ON HOLD
