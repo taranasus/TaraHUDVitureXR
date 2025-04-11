@@ -297,6 +297,27 @@ public class GlassesDisplayService extends Service implements
         return mVitureSDKManager.is3DModeEnabled();
     }
     
+    /**
+     * Restart signal strength monitoring after permission is granted
+     * This is called from the activity when READ_PHONE_STATE permission is granted
+     */
+    public void restartSignalMonitoring() {
+        Log.d(TAG, "Restarting signal strength monitoring after permission granted");
+        
+        if (mDisplayManager != null && mDisplayManager.areGlassesConnected()) {
+            // Get the current presentation and restart signal monitoring
+            GlassesPresentation presentation = mDisplayManager.getGlassesPresentation();
+            if (presentation != null) {
+                Log.d(TAG, "Reinitializing signal strength monitoring in presentation");
+                presentation.reinitializeSignalStrengthMonitoring();
+            } else {
+                Log.e(TAG, "Cannot restart signal monitoring - presentation is null");
+            }
+        } else {
+            Log.e(TAG, "Cannot restart signal monitoring - glasses not connected");
+        }
+    }
+    
     //
     // Callback implementations
     //

@@ -244,6 +244,17 @@ public class DisplayPresentationManager {
     }
     
     /**
+     * Get the current glasses presentation instance
+     * This is used to access the presentation directly for operations like
+     * restarting signal strength monitoring after permission is granted
+     * 
+     * @return The current GlassesPresentation instance, or null if not available
+     */
+    public GlassesPresentation getGlassesPresentation() {
+        return mGlassesPresentation;
+    }
+    
+    /**
      * Clean up resources when no longer needed
      */
     public void release() {

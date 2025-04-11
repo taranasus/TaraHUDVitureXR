@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!-- Required permission for reading phone state (signal strength) -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- Required permission for accessing cell info (modern signal strength API) -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"

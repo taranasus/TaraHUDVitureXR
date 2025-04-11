@@ -1,10 +1,15 @@
 package com.eden.demo.sensor;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import android.Manifest;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -27,6 +32,7 @@ import com.eden.demo.sensor.databinding.ActivityFullscreenBinding;
  */
 public class FullscreenActivity extends AppCompatActivity {
     private static final String TAG = "VitureDemo";
+    private static final int PERMISSION_REQUEST_READ_PHONE_STATE = 1001;
 
     private ActivityFullscreenBinding binding;
     
@@ -82,6 +88,9 @@ public class FullscreenActivity extends AppCompatActivity {
         mBtnHideBox = binding.btnHideBox;
         mSwitch3DMode = binding.switch3dMode;
         mStatusText = binding.statusText;
+        
+        // Check and request READ_PHONE_STATE permission for signal strength
+        checkAndRequestPhoneStatePermission();
         
         // Start the GlassesDisplayService so it persists even when the activity is not visible
         startGlassesDisplayService();
@@ -202,6 +211,89 @@ public class FullscreenActivity extends AppCompatActivity {
         // Bind to GlassesDisplayService
         Intent intent = new Intent(this, GlassesDisplayService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    /**
+     * Check if we have required permissions and request them if not
+     */
+    private void checkAndRequestPhoneStatePermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            boolean needPhoneStatePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
+                    != PackageManager.PERMISSION_GRANTED;
+            boolean needLocationPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED;
+            
+            if (needPhoneStatePermission || needLocationPermission) {
+                Log.d(TAG, "Requesting permissions for signal strength monitoring");
+                
+                // Create a list of permissions to request
+                java.util.ArrayList<String> permissions = new java.util.ArrayList<>();
+                
+                if (needPhoneStatePermission) {
+                    permissions.add(Manifest.permission.READ_PHONE_STATE);
+                    Log.d(TAG, "Need to request READ_PHONE_STATE permission");
+                }
+                
+                if (needLocationPermission) {
+                    permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+                    Log.d(TAG, "Need to request ACCESS_FINE_LOCATION permission");
+                }
+                
+                // Convert to array and request permissions
+                String[] permissionsArray = permissions.toArray(new String[0]);
+                ActivityCompat.requestPermissions(this, permissionsArray, PERMISSION_REQUEST_READ_PHONE_STATE);
+                
+                updateStatus("Requesting permissions for signal strength");
+            } else {
+                Log.d(TAG, "All required permissions already granted");
+            }
+        }
+    }
+    
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        
+        if (requestCode == PERMISSION_REQUEST_READ_PHONE_STATE) {
+            boolean allGranted = true;
+            boolean anyGranted = false;
+            
+            // Check if all requested permissions were granted
+            for (int i = 0; i < grantResults.length; i++) {
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    anyGranted = true;
+                    Log.d(TAG, "Permission granted: " + permissions[i]);
+                } else {
+                    allGranted = false;
+                    Log.d(TAG, "Permission denied: " + permissions[i]);
+                }
+            }
+            
+            if (allGranted) {
+                // All permissions granted
+                Log.d(TAG, "All required permissions granted");
+                updateStatus("All permissions granted - signal strength enabled");
+                
+                // Restart the service to apply the permissions
+                if (mBound && mService != null) {
+                    mService.restartSignalMonitoring();
+                }
+            } else if (anyGranted) {
+                // Some permissions granted
+                Log.d(TAG, "Some permissions granted - signal strength may be limited");
+                updateStatus("Some permissions granted - signal strength may be limited");
+                
+                // Restart the service to apply the granted permissions
+                if (mBound && mService != null) {
+                    mService.restartSignalMonitoring();
+                }
+            } else {
+                // All permissions denied
+                Log.d(TAG, "All permissions denied");
+                updateStatus("Permissions denied - signal strength disabled");
+                Toast.makeText(this, "Signal strength monitoring disabled", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
